@@ -19,27 +19,27 @@ public class ArrowButtons : MonoBehaviour
     {
         Debug.Log("Vorwärts-Pfeil gedrückt");
         floor.GetComponent<FloorObjectPlacement>().enabled = true;
-        floor.GetComponent<FloorObjectPlacement>().prefabPlacementObject = prefabForward;
+        floor.GetComponent<FloorObjectPlacement>().prefabPlacementObject = prefabRight;
     }
 
     public void OnClickBackward()
     {
         Debug.Log("Rückwärts-Pfeil gedrückt");
         floor.GetComponent<FloorObjectPlacement>().enabled = true;
-        floor.GetComponent<FloorObjectPlacement>().prefabPlacementObject = prefabBack;
+        floor.GetComponent<FloorObjectPlacement>().prefabPlacementObject = prefabLeft;
     }
 
     public void OnClickLeft()
     {
         Debug.Log("Links-Pfeil gedrückt");
         floor.GetComponent<FloorObjectPlacement>().enabled = true;
-        floor.GetComponent<FloorObjectPlacement>().prefabPlacementObject = prefabLeft;
+        floor.GetComponent<FloorObjectPlacement>().prefabPlacementObject = prefabForward;
     }
 
     public void OnClickRight()
     {
         Debug.Log("Rechts-Pfeil gedrückt");
         floor.GetComponent<FloorObjectPlacement>().enabled = true;
-        floor.GetComponent<FloorObjectPlacement>().prefabPlacementObject = prefabRight;
+        floor.GetComponent<FloorObjectPlacement>().prefabPlacementObject = prefabBack;
     }
 }

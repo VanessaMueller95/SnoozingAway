@@ -20,7 +20,7 @@ public class CameraMovement : MonoBehaviour
     {
 
         //Swipe
-        if (Input.GetMouseButtonDown(0))
+        /*if (Input.GetMouseButtonDown(0))
         {
             firstPressPos = Input.mousePosition;
         }
@@ -32,7 +32,7 @@ public class CameraMovement : MonoBehaviour
         }
 
         float disX = Mathf.Abs(firstPressPos.x - currentSwipe.x);
-        float disY = Mathf.Abs(firstPressPos.y - currentSwipe.y);
+        float disY = Mathf.Abs(firstPressPos.y - currentSwipe.y);*/
 
 
 
