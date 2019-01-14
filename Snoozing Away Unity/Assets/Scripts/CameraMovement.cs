@@ -11,72 +11,70 @@ public class CameraMovement : MonoBehaviour
     public float rDistance = 1.0f;
     public float rSpeed = 1.0f;
 
+    string[] directionArray = new string[] {"Front","Right","Back","Left"};
+    int directionCounter = 0;
 
-    Vector2 firstPressPos;
-    Vector2 currentSwipe;
+    public string direction;
 
+    void Start()
+    {
+           direction = directionArray[directionCounter];
+    }
+    
     // Update is called once per frame
     void Update()
     {
 
-        //Swipe
-        /*if (Input.GetMouseButtonDown(0))
-        {
-            firstPressPos = Input.mousePosition;
-        }
-        if (Input.GetMouseButtonUp(0))
-        {
-            currentSwipe = (Vector2)Input.mousePosition - firstPressPos;
-
-            Debug.Log(currentSwipe + ", " + currentSwipe.normalized);
-        }
-
-        float disX = Mathf.Abs(firstPressPos.x - currentSwipe.x);
-        float disY = Mathf.Abs(firstPressPos.y - currentSwipe.y);*/
-
-
-
         // Trigger functions if Rotate is requested
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             targetAngle -= 90.0f;
+            directionCounter--;
+            if (directionCounter > 3)
+            {
+                directionCounter = 0;
+            }
+            else if (directionCounter < 0)
+            {
+                directionCounter = 3;
+            }
+            direction = directionArray[directionCounter];
+            Debug.Log(direction);
+            //Aktualisiert die Prefabs der Pfeilfelder passend zur neuen Perspektive
+            if(GameObject.Find("Gameobject").GetComponent<ArrowButtons>().actualButton != null)
+            {
+                GameObject.Find("Gameobject").GetComponent<ArrowButtons>().OnClickDirectionButton(GameObject.Find("Gameobject").GetComponent<ArrowButtons>().actualButton);
+            }
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             targetAngle += 90.0f;
+            directionCounter++;
+            if (directionCounter > 3)
+            {
+                directionCounter = 0;
+            }
+            else if (directionCounter < 0)
+            {
+                directionCounter = 3;
+            }
+            direction = directionArray[directionCounter];
+            Debug.Log(direction);
+            //Aktualisiert die Prefabs der Pfeilfelder passend zur neuen Perspektive
+            if (GameObject.Find("FieldController").GetComponent<ArrowButtons>().actualButton != null)
+            {
+                GameObject.Find("FieldController").GetComponent<ArrowButtons>().OnClickDirectionButton(GameObject.Find("FieldController").GetComponent<ArrowButtons>().actualButton);
+            }
         }
 
         if (targetAngle != 0)
         {
             Rotate();
         }
-
-
-        /*    if (disX > 0 || disY > 0)
-            {
-                if (disX > disY)
-                {
-                    targetAngle -= 90.0f;
-                    disX = -1;
-                    disY = -1;
-                }
-                else if (disX > disY)
-                {
-                    targetAngle += 90.0f;
-                    disX = -1;
-                    disY = -1;
-                }
-
-                if (targetAngle != 0)
-                {
-                    Rotate();
-                }
-            }*/
     }
 
     protected void Rotate()
     {
-
         float step = rSpeed * Time.deltaTime;
         float orbitCircumfrance = 2F * rDistance * Mathf.PI;
         float distanceDegrees = (rSpeed / orbitCircumfrance) * 360;
@@ -92,6 +90,5 @@ public class CameraMovement : MonoBehaviour
             transform.RotateAround(targetObject.transform.position, Vector3.up, rotationAmount);
             targetAngle += rotationAmount;
         }
-
     }
 }

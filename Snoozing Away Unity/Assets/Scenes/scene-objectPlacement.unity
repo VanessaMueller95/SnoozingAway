@@ -511,7 +511,7 @@ GameObject:
   - component: {fileID: 437358653}
   - component: {fileID: 437358656}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: MainCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -591,6 +591,7 @@ MonoBehaviour:
   targetObject: {fileID: 868108260}
   rDistance: 1
   rSpeed: 1
+  direction: 
 --- !u!1 &468751625 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100054, guid: e05762455adaba5458893c77303e2360,
@@ -684,14 +685,14 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1454953508}
-        m_MethodName: OnClickForward
-        m_Mode: 1
+        m_MethodName: OnClickDirectionButton
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Forward
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
@@ -1302,7 +1303,7 @@ GameObject:
   - component: {fileID: 1454953509}
   - component: {fileID: 1454953508}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: FieldController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1326,6 +1327,7 @@ MonoBehaviour:
   prefabForward: {fileID: 1264298172444862, guid: f782527cf21ac214dae875b9e524b9cb,
     type: 2}
   prefabBack: {fileID: 1405804417565074, guid: d2d526f3824bcb04ea0fc023439195a6, type: 2}
+  actualButton: 
 --- !u!4 &1454953509
 Transform:
   m_ObjectHideFlags: 0
@@ -1563,14 +1565,14 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1454953508}
-        m_MethodName: OnClickBackward
-        m_Mode: 1
+        m_MethodName: OnClickDirectionButton
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Backward
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
@@ -1685,14 +1687,14 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1454953508}
-        m_MethodName: OnClickRight
-        m_Mode: 1
+        m_MethodName: OnClickDirectionButton
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Right
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
@@ -1826,14 +1828,14 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1454953508}
-        m_MethodName: OnClickLeft
-        m_Mode: 1
+        m_MethodName: OnClickDirectionButton
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Left
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
