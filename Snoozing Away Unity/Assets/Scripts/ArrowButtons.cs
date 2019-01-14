@@ -81,10 +81,10 @@ public class ArrowButtons : MonoBehaviour
                     floor.GetComponent<FloorObjectPlacement>().prefabPlacementObject = prefabForward;
                     break;
                 case "Left":
-                    floor.GetComponent<FloorObjectPlacement>().prefabPlacementObject = prefabLeft;
+                    floor.GetComponent<FloorObjectPlacement>().prefabPlacementObject = prefabRight;
                     break;
                 case "Right":
-                    floor.GetComponent<FloorObjectPlacement>().prefabPlacementObject = prefabRight;
+                    floor.GetComponent<FloorObjectPlacement>().prefabPlacementObject = prefabLeft;
                     break;
                 case "Back":
                     floor.GetComponent<FloorObjectPlacement>().prefabPlacementObject = prefabBack;
@@ -105,10 +105,10 @@ public class ArrowButtons : MonoBehaviour
                     floor.GetComponent<FloorObjectPlacement>().prefabPlacementObject = prefabBack;
                     break;
                 case "Left":
-                    floor.GetComponent<FloorObjectPlacement>().prefabPlacementObject = prefabRight;
+                    floor.GetComponent<FloorObjectPlacement>().prefabPlacementObject = prefabLeft;
                     break;
                 case "Right":
-                    floor.GetComponent<FloorObjectPlacement>().prefabPlacementObject = prefabLeft;
+                    floor.GetComponent<FloorObjectPlacement>().prefabPlacementObject = prefabRight;
                     break;
                 case "Back":
                     floor.GetComponent<FloorObjectPlacement>().prefabPlacementObject = prefabForward;

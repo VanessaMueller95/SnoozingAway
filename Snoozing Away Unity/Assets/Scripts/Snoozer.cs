@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Snoozer : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class Snoozer : MonoBehaviour
     RaycastHit hitDown;
     RaycastHit hitFloor;
     RaycastHit hitWall;
+
+    public LayerMask mask;
 
     public static Quaternion spreadAngle = Quaternion.AngleAxis(30, new Vector3(0, 0, 1));
 
@@ -26,7 +29,7 @@ public class Snoozer : MonoBehaviour
         Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 1f, Color.blue);
 
         //Positionierung von Snoozer auf dem Boden mit einem Raycast nach Unten
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down) * 10f, out hitFloor))
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down) * 10f, out hitFloor, mask))
         {
             //Berechnung des Abstandes vom Boden
             Vector3 distance = hitFloor.point + transform.up * 0.5f;
@@ -35,7 +38,7 @@ public class Snoozer : MonoBehaviour
         }
 
         //Raycast nach vorne um Wände zu erkennen 
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward) * 1f, out hitWall, 1))
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward) * 1f, out hitWall, 1, mask))
         {
             //Test auf Entfernung zur Wand
             if (hitWall.distance < 1)
@@ -48,7 +51,7 @@ public class Snoozer : MonoBehaviour
         }
 
         //Raycast nach unten um zu Testen ob es einen Boden gibt und Positionierung an Boden-Normale
-        else if (Physics.Raycast(transform.position, newVector * 10f, out hitDown))
+        else if (Physics.Raycast(transform.position, newVector * 10f, out hitDown, mask))
         {
             //Test ob Bodennormale Charakter Normalen entspricht
             if (transform.up != hitDown.normal)
@@ -58,6 +61,17 @@ public class Snoozer : MonoBehaviour
             }
         }
 
+    }
+
+    void OnCollisionEnter(Collision col)
+    {
+        Debug.Log("Collision");
+        if (col.gameObject.tag == "water")
+        {
+            Debug.Log("Water");
+            Destroy(transform.gameObject);
+            SceneManager.LoadScene("scene-objectPlacement");
+        }
     }
 }
 
