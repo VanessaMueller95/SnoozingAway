@@ -29,7 +29,7 @@ public class Snoozer : MonoBehaviour
         Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 1f, Color.blue);
 
         //Positionierung von Snoozer auf dem Boden mit einem Raycast nach Unten
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down) * 10f, out hitFloor, mask))
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down) * 10f, out hitFloor, Mathf.Infinity, mask))
         {
             //Berechnung des Abstandes vom Boden
             Vector3 distance = hitFloor.point + transform.up * 0.5f;
@@ -41,7 +41,7 @@ public class Snoozer : MonoBehaviour
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward) * 1f, out hitWall, 1, mask))
         {
             //Test auf Entfernung zur Wand
-            if (hitWall.distance < 1)
+            if (hitWall.distance < 0.5)
             {
                 //Rotation von Snoozer in Richtung der Normalen der Wand
                 Quaternion newRotation = Quaternion.FromToRotation(transform.up, hitWall.normal) * transform.rotation;
@@ -51,7 +51,7 @@ public class Snoozer : MonoBehaviour
         }
 
         //Raycast nach unten um zu Testen ob es einen Boden gibt und Positionierung an Boden-Normale
-        else if (Physics.Raycast(transform.position, newVector * 10f, out hitDown, mask))
+        if (Physics.Raycast(transform.position, newVector * 10f, out hitDown, Mathf.Infinity, mask))
         {
             //Test ob Bodennormale Charakter Normalen entspricht
             if (transform.up != hitDown.normal)
@@ -70,7 +70,28 @@ public class Snoozer : MonoBehaviour
         {
             Debug.Log("Water");
             Destroy(transform.gameObject);
-            SceneManager.LoadScene("scene-objectPlacement");
+            spreadAngle = Quaternion.AngleAxis(30, new Vector3(0, 0, 1));
+            SceneManager.LoadScene("scene-newWorld");
+        }
+
+        if (col.gameObject.tag == "ziel")
+        {
+            Debug.Log("Ziel");
+            Destroy(transform.gameObject);
+            spreadAngle = Quaternion.AngleAxis(30, new Vector3(0, 0, 1));
+            SceneManager.LoadScene("scene-newWorld");
+        }
+
+        if (col.gameObject.tag == "eule")
+        {
+            Debug.Log("Eule");
+            Destroy(col.gameObject);
+        }
+
+        if (col.gameObject.tag == "rabe")
+        {
+            Debug.Log("Rabe");
+            Destroy(col.gameObject);
         }
     }
 }

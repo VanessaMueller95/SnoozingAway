@@ -41,9 +41,9 @@ public class CameraMovement : MonoBehaviour
             direction = directionArray[directionCounter];
             Debug.Log(direction);
             //Aktualisiert die Prefabs der Pfeilfelder passend zur neuen Perspektive
-            if(GameObject.Find("Gameobject").GetComponent<ArrowButtons>().actualButton != null)
+            if(GameObject.Find("FieldController").GetComponent<ArrowButtons>().actualButton != null)
             {
-                GameObject.Find("Gameobject").GetComponent<ArrowButtons>().OnClickDirectionButton(GameObject.Find("Gameobject").GetComponent<ArrowButtons>().actualButton);
+                GameObject.Find("FieldController").GetComponent<ArrowButtons>().OnClickDirectionButton(GameObject.Find("FieldController").GetComponent<ArrowButtons>().actualButton);
             }
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))

@@ -19,6 +19,8 @@ public class FloorObjectPlacement : MonoBehaviour
 
     // Speichert welche Felder bereits belegt sind
     int[,] usedSpace;
+
+    public float prefabRotationX;
     
     //Objekt, das plaziert wird
     GameObject placementObject = null;
@@ -31,6 +33,7 @@ public class FloorObjectPlacement : MonoBehaviour
     // Berechnung des Gitters und Initialisierung des Platz Arrays 
     void Start()
     {
+        Debug.Log(GetComponent<Renderer>().bounds.size);
         Vector3 slots = GetComponent<Renderer>().bounds.size / grid;
         usedSpace = new int[Mathf.CeilToInt(slots.x), Mathf.CeilToInt(slots.z)];
         for (var x = 0; x < Mathf.CeilToInt(slots.x); x++)
@@ -63,22 +66,24 @@ public class FloorObjectPlacement : MonoBehaviour
             if (lastPos.x != x || lastPos.z != z || areaObject == null)
             {
                 lastPos.x = x;
+                Debug.Log(x);
                 lastPos.z = z;
+                Debug.Log(z);
                 if (areaObject != null)
                 {
                     Destroy(areaObject);
                 }
-                areaObject = (GameObject)Instantiate(usedSpace[x, z] == 0 ? prefabOK : prefabFail, point, Quaternion.identity);
+                areaObject = (GameObject)Instantiate(usedSpace[x, z] == 0 ? prefabOK : prefabFail, point, Quaternion.Euler(0, prefabRotationX, 0));
             }
 
             // Objekt wird initialisiert oder bewegt 
             if (!placementObject)
             {
-                placementObject = (GameObject)Instantiate(prefabPlacementObject, point, Quaternion.identity);
+                //placementObject = (GameObject)Instantiate(prefabPlacementObject, point, Quaternion.identity);
             }
             else
             {
-                placementObject.transform.position = point;
+                //placementObject.transform.position = point;
             }
 
             // Bei Linksklick wird das Objekt in die Szene eingefügt und die Position als besetzt makiert
@@ -90,7 +95,7 @@ public class FloorObjectPlacement : MonoBehaviour
                 {
                     Debug.Log("Placement Position: " + x + ", " + z);
                     usedSpace[x, z] = 1;
-                    Instantiate(prefabPlacementObject, point, Quaternion.identity);
+                    Instantiate(prefabPlacementObject, point, Quaternion.Euler(0, prefabRotationX, 0));
                 }
             }
             else if (!Input.GetMouseButtonDown(0))
