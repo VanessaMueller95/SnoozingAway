@@ -14,6 +14,8 @@ public class Snoozer : MonoBehaviour
 
     public LayerMask mask;
 
+    public GameObject restartMenuUI;
+
     public static Quaternion spreadAngle = Quaternion.AngleAxis(30, new Vector3(0, 0, 1));
 
     void Update()
@@ -71,7 +73,8 @@ public class Snoozer : MonoBehaviour
             Debug.Log("Water");
             Destroy(transform.gameObject);
             spreadAngle = Quaternion.AngleAxis(30, new Vector3(0, 0, 1));
-            SceneManager.LoadScene("scene-newWorld");
+            restartMenuUI.SetActive(true);
+            Time.timeScale = 1f;
         }
 
         if (col.gameObject.tag == "ziel")
@@ -79,7 +82,8 @@ public class Snoozer : MonoBehaviour
             Debug.Log("Ziel");
             Destroy(transform.gameObject);
             spreadAngle = Quaternion.AngleAxis(30, new Vector3(0, 0, 1));
-            SceneManager.LoadScene("scene-newWorld");
+            restartMenuUI.SetActive(true);
+            Time.timeScale = 1f;
         }
 
         if (col.gameObject.tag == "eule")
