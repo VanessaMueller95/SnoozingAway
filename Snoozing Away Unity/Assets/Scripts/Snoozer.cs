@@ -16,10 +16,12 @@ public class Snoozer : MonoBehaviour
 
     public GameObject restartMenuUI;
 
-    public static Quaternion spreadAngle = Quaternion.AngleAxis(30, new Vector3(0, 0, 1));
+    public Quaternion spreadAngle = Quaternion.AngleAxis(30, new Vector3(0, 0, 1));
 
     void Update()
     {
+        Debug.Log(Time.timeScale);
+
         noAngle = transform.TransformDirection(Vector3.down);
         newVector = spreadAngle * noAngle;
 
@@ -71,31 +73,33 @@ public class Snoozer : MonoBehaviour
         if (col.gameObject.tag == "water")
         {
             Debug.Log("Water");
-            Destroy(transform.gameObject);
+            //Destroy(transform.gameObject);
             spreadAngle = Quaternion.AngleAxis(30, new Vector3(0, 0, 1));
             restartMenuUI.SetActive(true);
-            Time.timeScale = 1f;
+            Time.timeScale = 0f;
         }
 
         if (col.gameObject.tag == "ziel")
         {
             Debug.Log("Ziel");
-            Destroy(transform.gameObject);
+            //Destroy(transform.gameObject);
             spreadAngle = Quaternion.AngleAxis(30, new Vector3(0, 0, 1));
             restartMenuUI.SetActive(true);
-            Time.timeScale = 1f;
+            Time.timeScale = 0f;
         }
 
         if (col.gameObject.tag == "eule")
         {
             Debug.Log("Eule");
             Destroy(col.gameObject);
+            GameObject.Find("TimerCanvas").GetComponent<Timer>().targetTime += (float)5.0;
         }
 
         if (col.gameObject.tag == "rabe")
         {
             Debug.Log("Rabe");
             Destroy(col.gameObject);
+            GameObject.Find("TimerCanvas").GetComponent<Timer>().targetTime -= (float)5.0;
         }
     }
 }

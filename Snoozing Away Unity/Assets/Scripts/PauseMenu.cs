@@ -8,9 +8,9 @@ public class PauseMenu : MonoBehaviour {
     // Use this for initialization
     public static bool GameIsPause = false;
     public GameObject pauseMenuUI;
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update () {
         if (Input.GetKeyDown(KeyCode.P))
         {
             Debug.Log("pause");
@@ -42,6 +42,7 @@ public class PauseMenu : MonoBehaviour {
 
     public void Restart()
     {
+        Time.timeScale = 1.0f;
         SceneManager.LoadScene("scene-newWorld");
     }
 

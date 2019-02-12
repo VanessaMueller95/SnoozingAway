@@ -26,22 +26,22 @@ public class ArrowField : MonoBehaviour {
             //Anpassung des Vektors für den Raycast des Characters und Drehung des Charackters in die gewünschte Richtung
             if (orientation == Orientation.Forward)
             {
-                Snoozer.spreadAngle = Quaternion.AngleAxis(30, new Vector3(0, 0, 1));
+                chara.GetComponent<Snoozer>().spreadAngle = Quaternion.AngleAxis(30, new Vector3(0, 0, 1));
                 chara.transform.eulerAngles = new Vector3(transform.eulerAngles.x, -90, transform.eulerAngles.z);
             }
             else if (orientation == Orientation.Right)
             {
-                Snoozer.spreadAngle = Quaternion.AngleAxis(30, new Vector3(1, 0, 0));
+                chara.GetComponent<Snoozer>().spreadAngle = Quaternion.AngleAxis(30, new Vector3(1, 0, 0));
                 chara.transform.eulerAngles = new Vector3(transform.eulerAngles.x, 0, transform.eulerAngles.z);
             }
             else if (orientation == Orientation.Left)
             {
-                Snoozer.spreadAngle = Quaternion.AngleAxis(-30, new Vector3(1, 0, 0));
+                chara.GetComponent<Snoozer>().spreadAngle = Quaternion.AngleAxis(-30, new Vector3(1, 0, 0));
                 chara.transform.eulerAngles = new Vector3(transform.eulerAngles.x, -180, transform.eulerAngles.z);
             }
             else if (orientation == Orientation.Backward)
             {
-                Snoozer.spreadAngle = Quaternion.AngleAxis(-30, new Vector3(0, 0, 1));
+                chara.GetComponent<Snoozer>().spreadAngle = Quaternion.AngleAxis(-30, new Vector3(0, 0, 1));
                 chara.transform.eulerAngles = new Vector3(transform.eulerAngles.x, 90, transform.eulerAngles.z);
             }
 
