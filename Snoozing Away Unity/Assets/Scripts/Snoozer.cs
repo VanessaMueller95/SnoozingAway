@@ -15,21 +15,27 @@ public class Snoozer : MonoBehaviour
     public LayerMask mask;
 
     public GameObject restartMenuUI;
+    public Quaternion spreadAngle;
 
-    public Quaternion spreadAngle = Quaternion.AngleAxis(30, new Vector3(0, 0, 1));
+    private void Start()
+    {
+        spreadAngle = Quaternion.AngleAxis(10, new Vector3(0, 0, 1));
+    }
 
     void Update()
     {
         Debug.Log(Time.timeScale);
-
+        
         noAngle = transform.TransformDirection(Vector3.down);
         newVector = spreadAngle * noAngle;
+
+        Debug.Log(Time.timeScale);
 
         //Character Bewegung nach Vorne
         transform.Translate(Vector3.forward * Time.deltaTime);
 
         //Raycast Zeichnung zur Visualisierung
-        Debug.DrawRay(transform.position + new Vector3(0f, 0f, 0f), newVector * 10f, Color.yellow);
+        Debug.DrawRay(transform.position, newVector * 10f, Color.yellow);
         Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 1f, Color.blue);
 
         //Positionierung von Snoozer auf dem Boden mit einem Raycast nach Unten
@@ -38,7 +44,7 @@ public class Snoozer : MonoBehaviour
             //Berechnung des Abstandes vom Boden
             Vector3 distance = hitFloor.point + transform.up * 0.5f;
             //Animation der Positionsänderung
-            transform.position = Vector3.Lerp(transform.position, distance, Time.deltaTime * 4);
+            transform.position = Vector3.Lerp(transform.position, distance, Time.deltaTime * 2);
         }
 
         //Raycast nach vorne um Wände zu erkennen 
@@ -50,7 +56,7 @@ public class Snoozer : MonoBehaviour
                 //Rotation von Snoozer in Richtung der Normalen der Wand
                 Quaternion newRotation = Quaternion.FromToRotation(transform.up, hitWall.normal) * transform.rotation;
                 //Animation der Position von Snoozer
-                transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, Time.deltaTime * 4);
+                transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, Time.deltaTime * 3);
             }
         }
 
@@ -61,7 +67,7 @@ public class Snoozer : MonoBehaviour
             if (transform.up != hitDown.normal)
             {
                 Quaternion newRotation = Quaternion.FromToRotation(transform.up, hitDown.normal) * transform.rotation;
-                transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, Time.deltaTime * 4);
+                transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, Time.deltaTime * 3);
             }
         }
 
@@ -74,7 +80,7 @@ public class Snoozer : MonoBehaviour
         {
             Debug.Log("Water");
             //Destroy(transform.gameObject);
-            spreadAngle = Quaternion.AngleAxis(30, new Vector3(0, 0, 1));
+            spreadAngle = Quaternion.AngleAxis(10, new Vector3(0, 0, 1));
             restartMenuUI.SetActive(true);
             Time.timeScale = 0f;
         }
@@ -83,7 +89,7 @@ public class Snoozer : MonoBehaviour
         {
             Debug.Log("Ziel");
             //Destroy(transform.gameObject);
-            spreadAngle = Quaternion.AngleAxis(30, new Vector3(0, 0, 1));
+            spreadAngle = Quaternion.AngleAxis(10, new Vector3(0, 0, 1));
             restartMenuUI.SetActive(true);
             Time.timeScale = 0f;
         }
