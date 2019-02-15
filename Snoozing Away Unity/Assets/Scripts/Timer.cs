@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Timer : MonoBehaviour {
 
     public Text uiText;
-    public float targetTime = 60.0f;
+    public float targetTime = 100.0f;
     bool timerActive = true;
     public GameObject restartMenuUI;
 
