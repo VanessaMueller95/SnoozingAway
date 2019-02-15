@@ -15,6 +15,7 @@ public class Snoozer : MonoBehaviour
     public LayerMask mask;
 
     public GameObject restartMenuUI;
+    public GameObject wonMenuUI;
     public Quaternion spreadAngle;
 
     private void Start()
@@ -90,7 +91,7 @@ public class Snoozer : MonoBehaviour
             Debug.Log("Ziel");
             //Destroy(transform.gameObject);
             spreadAngle = Quaternion.AngleAxis(10, new Vector3(0, 0, 1));
-            restartMenuUI.SetActive(true);
+            wonMenuUI.SetActive(true);
             Time.timeScale = 0f;
         }
 
