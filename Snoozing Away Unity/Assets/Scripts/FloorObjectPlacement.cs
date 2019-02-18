@@ -15,18 +15,21 @@ public class FloorObjectPlacement : MonoBehaviour
     public GameObject prefabFail;
 
     //Gittergröße
-    public float grid = 2.0f;
+    public float gridX = 2.0f;
+    public float gridY = 2.0f;
 
     // Speichert welche Felder bereits belegt sind
     int[,] usedSpace;
 
+    //Roationswinkel des Prefabs
     public float prefabRotationX;
-    
+
     //Objekt, das plaziert wird
     GameObject placementObject = null;
     //Objekt, das Verfügbarkeit zeigt 
     GameObject areaObject = null;
 
+    //Mauszeiger Verarbeitung
     bool mouseClick = false;
     Vector3 lastPos;
 
@@ -34,7 +37,7 @@ public class FloorObjectPlacement : MonoBehaviour
     void Start()
     {
         Debug.Log(GetComponent<Renderer>().bounds.size);
-        Vector3 slots = GetComponent<Renderer>().bounds.size / grid;
+        Vector3 slots = GetComponent<Renderer>().bounds.size*2;
         usedSpace = new int[Mathf.CeilToInt(slots.x), Mathf.CeilToInt(slots.z)];
         for (var x = 0; x < Mathf.CeilToInt(slots.x); x++)
         {
@@ -55,12 +58,12 @@ public class FloorObjectPlacement : MonoBehaviour
             Vector3 halfSlots = GetComponent<Renderer>().bounds.size / 2.0f;
 
             //Berechnung der Positionen
-            int x = (int)Math.Round(Math.Round(point.x - transform.position.x + halfSlots.x - grid / 2.0f) / grid);
-            int z = (int)Math.Round(Math.Round(point.z - transform.position.z + halfSlots.z - grid / 2.0f) / grid);
+            int x = (int)Math.Round(Math.Round(point.x - transform.position.x + halfSlots.x - gridX / 2.0f) / gridX);
+            int z = (int)Math.Round(Math.Round(point.z - transform.position.z + halfSlots.z - gridY / 2.0f) / gridY);
 
             //Berechnung der Weltkooordinaten basierend auf dem Gitter 
-            point.x = (float)(x) * grid - halfSlots.x + transform.position.x + grid / 2.0f;
-            point.z = (float)(z) * grid - halfSlots.z + transform.position.z + grid / 2.0f;
+            point.x = (float)(x) * gridX - halfSlots.x + transform.position.x + gridX / 2.0f;
+            point.z = (float)(z) * gridY - halfSlots.z + transform.position.z + gridY / 2.0f;
 
             //Erzeugung eines Objekts, dass die Verfügbarkeit der Fläche darstellt
             if (lastPos.x != x || lastPos.z != z || areaObject == null)
@@ -74,16 +77,6 @@ public class FloorObjectPlacement : MonoBehaviour
                     Destroy(areaObject);
                 }
                 areaObject = (GameObject)Instantiate(usedSpace[x, z] == 0 ? prefabOK : prefabFail, point, Quaternion.Euler(0, prefabRotationX, 0));
-            }
-
-            // Objekt wird initialisiert oder bewegt 
-            if (!placementObject)
-            {
-                //placementObject = (GameObject)Instantiate(prefabPlacementObject, point, Quaternion.identity);
-            }
-            else
-            {
-                //placementObject.transform.position = point;
             }
 
             // Bei Linksklick wird das Objekt in die Szene eingefügt und die Position als besetzt makiert
@@ -104,7 +97,8 @@ public class FloorObjectPlacement : MonoBehaviour
             }
 
         }
-        //Wenn die Maus nicht mehr auf der Fläche liegt wird das Objekt zerstört 
+
+        //Wenn die Maus nicht mehr auf der Fläche liegt wird das Preview-Objekt zerstört 
         else
         {
             if (placementObject)

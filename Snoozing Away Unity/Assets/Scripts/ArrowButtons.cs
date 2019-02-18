@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public class ArrowButtons : MonoBehaviour
 {
     //Variablen für den Boden und die verschiedenen Pfeil-Prefabs 
-    //Werden über Editor eingestellt 
+    //Werden über den Inspektor eingestellt 
     public GameObject floor;
     public GameObject prefabLeft;
     public GameObject prefabRight;
@@ -20,36 +20,29 @@ public class ArrowButtons : MonoBehaviour
     //Aktiviert das FloorObjectPlacement Script und setzt die passenden Prefabs
     public void OnClickDirectionButton(string button)
     {
+        //Speicherung welcher Button die Funktion aufruft
         actualButton = button;
 
+        //Sollen Treppen plaziert werden, werden alle nötigen Skripte der Treppenplatzhalter aktiviert
         if (actualButton == "Stairs") {
 
-            floor.GetComponent<FloorObjectPlacement>().enabled = false;
+            //Skript für die PLazierung der Pfeilfelder wird deaktiviert
+            DeactivateArrows();
 
-            GameObject.Find("Plazierung_Treppen1").GetComponent<FloorObjectPlacement>().enabled = true;
-            GameObject.Find("Plazierung_Treppen2").GetComponent<FloorObjectPlacement>().enabled = true;
-            GameObject.Find("Plazierung_Treppen3").GetComponent<FloorObjectPlacement>().enabled = true;
-            GameObject.Find("Plazierung_Treppen4").GetComponent<FloorObjectPlacement>().enabled = true;
-            GameObject.Find("Plazierung_Brücken1").GetComponent<FloorObjectPlacement>().enabled = true;
-            GameObject.Find("Plazierung_Brücken1_1").GetComponent<FloorObjectPlacement>().enabled = true;
-            GameObject.Find("Plazierung_Brücken1_2").GetComponent<FloorObjectPlacement>().enabled = true;
+            //Skript für die Treppen aktiviert
+            ActivateStairs();
         }
 
+        //Vorwärtspfeil
         if (actualButton == "Forward")
         {
             Debug.Log("Vorwärts-Pfeil gedrückt");
-            Debug.Log(GameObject.Find("MainCamera").GetComponent<CameraMovement>().direction);
 
-            floor.GetComponent<FloorObjectPlacement>().enabled = true;
+            //Aktivierung/Deaktivierung des nötigen Platzierungs-Skripte
+            ActivateArrows();
+            DeactivateStairs();
 
-            GameObject.Find("Plazierung_Treppen1").GetComponent<FloorObjectPlacement>().enabled = false;
-            GameObject.Find("Plazierung_Treppen2").GetComponent<FloorObjectPlacement>().enabled = false;
-            GameObject.Find("Plazierung_Treppen3").GetComponent<FloorObjectPlacement>().enabled = false;
-            GameObject.Find("Plazierung_Treppen4").GetComponent<FloorObjectPlacement>().enabled = false;
-            GameObject.Find("Plazierung_Brücken1").GetComponent<FloorObjectPlacement>().enabled = false;
-            GameObject.Find("Plazierung_Brücken1_1").GetComponent<FloorObjectPlacement>().enabled = false;
-            GameObject.Find("Plazierung_Brücken1_2").GetComponent<FloorObjectPlacement>().enabled = false;
-
+            //Aktualisierung des Prefabs in Abhängigkeit der Kamerarichtung
             switch (GameObject.Find("MainCamera").GetComponent<CameraMovement>().direction)
             {
                 
@@ -75,10 +68,13 @@ public class ArrowButtons : MonoBehaviour
                     break;
             }
         }
+        //Rückwärtspfeil
         else if (actualButton == "Backward")
         {
             Debug.Log("Rückwärts-Pfeil gedrückt");
-            floor.GetComponent<FloorObjectPlacement>().enabled = true;
+
+            ActivateArrows();
+            DeactivateStairs();
 
             switch (GameObject.Find("MainCamera").GetComponent<CameraMovement>().direction)
             {
@@ -102,7 +98,9 @@ public class ArrowButtons : MonoBehaviour
         else if (actualButton == "Left")
         {
             Debug.Log("Linker-Pfeil gedrückt");
-            floor.GetComponent<FloorObjectPlacement>().enabled = true;
+
+            ActivateArrows();
+            DeactivateStairs();
 
             switch (GameObject.Find("MainCamera").GetComponent<CameraMovement>().direction)
             {
@@ -126,7 +124,9 @@ public class ArrowButtons : MonoBehaviour
         else if (actualButton == "Right")
         {
             Debug.Log("Rechter-Pfeil gedrückt");
-            floor.GetComponent<FloorObjectPlacement>().enabled = true;
+
+            ActivateArrows();
+            DeactivateStairs();
 
             switch (GameObject.Find("MainCamera").GetComponent<CameraMovement>().direction)
             {
@@ -147,26 +147,37 @@ public class ArrowButtons : MonoBehaviour
                     break;
             }
         }
-        /*
-        public void OnClickBackward()
-        {
-            Debug.Log("Rückwärts-Pfeil gedrückt");
-            floor.GetComponent<FloorObjectPlacement>().enabled = true;
-            floor.GetComponent<FloorObjectPlacement>().prefabPlacementObject = prefabLeft;
-        }
+    }
 
-        public void OnClickLeft()
-        {
-            Debug.Log("Links-Pfeil gedrückt");
-            floor.GetComponent<FloorObjectPlacement>().enabled = true;
-            floor.GetComponent<FloorObjectPlacement>().prefabPlacementObject = prefabForward;
-        }
+    public void DeactivateStairs()
+    {
+        GameObject.Find("Plazierung_Treppen1").GetComponent<FloorObjectPlacement>().enabled = false;
+        GameObject.Find("Plazierung_Treppen2").GetComponent<FloorObjectPlacement>().enabled = false;
+        GameObject.Find("Plazierung_Treppen3").GetComponent<FloorObjectPlacement>().enabled = false;
+        GameObject.Find("Plazierung_Treppen4").GetComponent<FloorObjectPlacement>().enabled = false;
+        GameObject.Find("Plazierung_Brücken1").GetComponent<FloorObjectPlacement>().enabled = false;
+        GameObject.Find("Plazierung_Brücken1_1").GetComponent<FloorObjectPlacement>().enabled = false;
+        GameObject.Find("Plazierung_Brücken1_2").GetComponent<FloorObjectPlacement>().enabled = false;
+    }
 
-        public void OnClickRight()
-        {
-            Debug.Log("Rechts-Pfeil gedrückt");
-            floor.GetComponent<FloorObjectPlacement>().enabled = true;
-            floor.GetComponent<FloorObjectPlacement>().prefabPlacementObject = prefabBack;
-        }*/
+    public void ActivateStairs()
+    {
+        GameObject.Find("Plazierung_Treppen1").GetComponent<FloorObjectPlacement>().enabled = true;
+        GameObject.Find("Plazierung_Treppen2").GetComponent<FloorObjectPlacement>().enabled = true;
+        GameObject.Find("Plazierung_Treppen3").GetComponent<FloorObjectPlacement>().enabled = true;
+        GameObject.Find("Plazierung_Treppen4").GetComponent<FloorObjectPlacement>().enabled = true;
+        GameObject.Find("Plazierung_Brücken1").GetComponent<FloorObjectPlacement>().enabled = true;
+        GameObject.Find("Plazierung_Brücken1_1").GetComponent<FloorObjectPlacement>().enabled = true;
+        GameObject.Find("Plazierung_Brücken1_2").GetComponent<FloorObjectPlacement>().enabled = true;
+    }
+
+    public void DeactivateArrows()
+    {
+        floor.GetComponent<FloorObjectPlacement>().enabled = false;
+    }
+
+    public void ActivateArrows()
+    {
+        floor.GetComponent<FloorObjectPlacement>().enabled = true;
     }
 }

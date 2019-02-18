@@ -5,37 +5,29 @@ using UnityEngine.SceneManagement;
 
 public class Snoozer : MonoBehaviour
 {
+    //Variablen zur Winkle-Berechnung des Abwärts-Raycasts 
     Vector3 noAngle;
     Vector3 newVector;
 
+    //Hit Variablen für die Raycasts
     RaycastHit hitDown;
     RaycastHit hitFloor;
     RaycastHit hitWall;
 
+    //LayerMaske, die es Raycasts ermöglicht bestimmte Ebenen zu ignorieren, kann über den Editor eingestellt werden
     public LayerMask mask;
 
+    //Variablen für die 3 Menüarten, müssen über den Editor gesetzt werden
     public GameObject restartMenuUI;
     public GameObject wonMenuUI;
     public Quaternion spreadAngle;
 
-    private void Start()
-    {
-        spreadAngle = Quaternion.AngleAxis(10, new Vector3(0, 0, 1));
-    }
-
     void Update()
     {
-        Debug.Log(Time.timeScale);
-        
-        noAngle = transform.TransformDirection(Vector3.down);
-        newVector = spreadAngle * noAngle;
-
-        Debug.Log(Time.timeScale);
-
         //Character Bewegung nach Vorne
         transform.Translate(Vector3.forward * Time.deltaTime);
 
-        //Raycast Zeichnung zur Visualisierung
+        //Raycast Zeichnung zur Visualisierung/Debugging
         Debug.DrawRay(transform.position, newVector * 10f, Color.yellow);
         Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 1f, Color.blue);
 
@@ -61,6 +53,10 @@ public class Snoozer : MonoBehaviour
             }
         }
 
+        //Berechnung des Winkels für den Raycast nach Unten, damit 90Grad Kanten erkannt werden
+        noAngle = transform.TransformDirection(Vector3.down);
+        newVector = spreadAngle * noAngle;
+
         //Raycast nach unten um zu Testen ob es einen Boden gibt und Positionierung an Boden-Normale
         if (Physics.Raycast(transform.position, newVector * 10f, out hitDown, Mathf.Infinity, mask))
         {
@@ -74,27 +70,26 @@ public class Snoozer : MonoBehaviour
 
     }
 
+    //Verhalten bei Kollisionen
     void OnCollisionEnter(Collision col)
     {
-        Debug.Log("Collision");
+        //Kollision mit Wasserflächen, Gameover Screen 
         if (col.gameObject.tag == "water")
         {
             Debug.Log("Water");
-            //Destroy(transform.gameObject);
-            spreadAngle = Quaternion.AngleAxis(10, new Vector3(0, 0, 1));
             restartMenuUI.SetActive(true);
             Time.timeScale = 0f;
         }
 
+        //Kollision mit dem Ziel, Gewonnen Screen
         if (col.gameObject.tag == "ziel")
         {
             Debug.Log("Ziel");
-            //Destroy(transform.gameObject);
-            spreadAngle = Quaternion.AngleAxis(10, new Vector3(0, 0, 1));
             wonMenuUI.SetActive(true);
             Time.timeScale = 0f;
         }
 
+        //Kollision mit Eulen, Zeit wird um 5 Sekunden verlängert
         if (col.gameObject.tag == "eule")
         {
             Debug.Log("Eule");
@@ -102,6 +97,7 @@ public class Snoozer : MonoBehaviour
             GameObject.Find("TimerCanvas").GetComponent<Timer>().targetTime += (float)5.0;
         }
 
+        //Kollision mit Raben, Zeit wird um 5 Sekunden reduziert
         if (col.gameObject.tag == "rabe")
         {
             Debug.Log("Rabe");

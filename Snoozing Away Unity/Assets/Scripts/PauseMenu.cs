@@ -5,12 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour {
 
-    // Use this for initialization
+    //Variablen für den Status und das Pause UI Element
     public static bool GameIsPause = false;
     public GameObject pauseMenuUI;
 
-    // Update is called once per frame
     void Update () {
+        //Pause Menü aktivieren oder deaktivieren durch die Taste P
         if (Input.GetKeyDown(KeyCode.P))
         {
             Debug.Log("pause");
@@ -26,13 +26,7 @@ public class PauseMenu : MonoBehaviour {
 		
 	}
 
-    public void Resume()
-    {
-        pauseMenuUI.SetActive(false);
-        Time.timeScale = 1.0f;
-        GameIsPause = false;
-    }
-
+    //Aktivieren des Pause Menüs, Anhalten des Spiels
     void Pause()
     {
         pauseMenuUI.SetActive(true);
@@ -40,17 +34,28 @@ public class PauseMenu : MonoBehaviour {
         GameIsPause = true;
     }
 
+    //Deaktivieren des Pause Menüs, Fortsetzen des Spiels
+    public void Resume()
+    {
+        pauseMenuUI.SetActive(false);
+        Time.timeScale = 1.0f;
+        GameIsPause = false;
+    }
+
+    //Neustart des Levels
     public void Restart()
     {
         Time.timeScale = 1.0f;
         SceneManager.LoadScene("scene-newWorld");
     }
 
+    //Laden des Menüs
     public void LoadMenu()
     {
 
     }
 
+    //Level beenden, Rückkehr in den Startbildschirm
     public void QuitGame()
     {
         GameIsPause = false;
