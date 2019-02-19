@@ -12,7 +12,7 @@ public class Timer : MonoBehaviour {
     public float targetTime = 100.0f;
 
     //Zum Aktivieren oder Deaktivieren
-    bool timerActive = true;
+    public bool timerActive = false;
 
     //Übergabe des MenüObjekts, damit es nach Wunsch aktiviert werden kann
     public GameObject restartMenuUI;

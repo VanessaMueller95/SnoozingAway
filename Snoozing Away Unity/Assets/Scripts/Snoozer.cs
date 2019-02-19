@@ -22,10 +22,20 @@ public class Snoozer : MonoBehaviour
     public GameObject wonMenuUI;
     public Quaternion spreadAngle;
 
+    bool blinkEnd = false;
+    public Animator animator;
+
+    private void Start()
+    {
+        StartCoroutine(Blink(3, "start"));
+    }
+
     void Update()
     {
-        //Character Bewegung nach Vorne
-        transform.Translate(Vector3.forward * Time.deltaTime);
+        if (blinkEnd == true)
+        {
+            Walk();
+        }
 
         //Raycast Zeichnung zur Visualisierung/Debugging
         Debug.DrawRay(transform.position, newVector * 10f, Color.yellow);
@@ -70,6 +80,12 @@ public class Snoozer : MonoBehaviour
 
     }
 
+    public void Walk()
+    {
+        //Character Bewegung nach Vorne
+        transform.Translate(Vector3.forward * Time.deltaTime);
+    }
+
     //Verhalten bei Kollisionen
     void OnCollisionEnter(Collision col)
     {
@@ -77,16 +93,16 @@ public class Snoozer : MonoBehaviour
         if (col.gameObject.tag == "water")
         {
             Debug.Log("Water");
-            restartMenuUI.SetActive(true);
-            Time.timeScale = 0f;
+            blinkEnd = false;
+            StartCoroutine(Blink(2, "water"));
         }
 
         //Kollision mit dem Ziel, Gewonnen Screen
         if (col.gameObject.tag == "ziel")
         {
             Debug.Log("Ziel");
-            wonMenuUI.SetActive(true);
-            Time.timeScale = 0f;
+            blinkEnd = false;
+            StartCoroutine(Blink(2, "ziel"));
         }
 
         //Kollision mit Eulen, Zeit wird um 5 Sekunden verlängert
@@ -103,6 +119,43 @@ public class Snoozer : MonoBehaviour
             Debug.Log("Rabe");
             Destroy(col.gameObject);
             GameObject.Find("TimerCanvas").GetComponent<Timer>().targetTime -= (float)5.0;
+        }
+    }
+
+    IEnumerator Blink(float waitTime, string state)
+    {
+        Debug.Log("In Funktion");
+        var endTime = Time.time + waitTime;
+
+        Renderer[] rs = GetComponentsInChildren<Renderer>();
+
+        while (Time.time < endTime)
+        {
+            Debug.Log("Aktiv");
+            foreach (Renderer r in rs) { r.enabled = false; }
+            yield return new WaitForSeconds(0.2f);
+            Debug.Log("Aktiv");
+            foreach (Renderer r in rs) { r.enabled = true; }
+            yield return new WaitForSeconds(0.2f);
+        }
+        blinkEnd = true;
+        animator.enabled = true;
+
+        if (state == "start")
+        {
+            GameObject.Find("TimerCanvas").GetComponent<Timer>().timerActive = true;
+        }
+
+        if (state == "water")
+        {
+            restartMenuUI.SetActive(true);
+            Time.timeScale = 0f;
+        }
+
+        if (state == "ziel")
+        {
+            wonMenuUI.SetActive(true);
+            Time.timeScale = 0f;
         }
     }
 }
