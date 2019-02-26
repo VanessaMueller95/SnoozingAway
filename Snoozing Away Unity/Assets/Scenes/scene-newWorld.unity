@@ -2152,7 +2152,7 @@ Light:
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.42
@@ -6384,9 +6384,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1530437172}
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 312948050}
+        m_MethodName: Restart
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -8829,15 +8829,15 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1450125685}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.7227656, y: 3.2200484, z: -4.5654836}
+  m_LocalRotation: {x: 0.01806841, y: -0, z: -0, w: 0.9998368}
+  m_LocalPosition: {x: 1.7227656, y: 3.44, z: -4.22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 437358655}
   - {fileID: 868108261}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 2.071, y: 0, z: 0}
 --- !u!1 &1454953507
 GameObject:
   m_ObjectHideFlags: 0
@@ -10000,7 +10000,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300106, guid: c3be307780258444bbcc9953b7ae75b7, type: 3}
@@ -11025,7 +11025,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Options
+  m_Text: Restart
 --- !u!222 &1775149659
 CanvasRenderer:
   m_ObjectHideFlags: 0

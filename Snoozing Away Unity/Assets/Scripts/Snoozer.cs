@@ -28,6 +28,7 @@ public class Snoozer : MonoBehaviour
     private void Start()
     {
         StartCoroutine(Blink(3, "start"));
+        spreadAngle = Quaternion.AngleAxis(4, new Vector3(0, 0, 1));
     }
 
     void Update()
@@ -47,7 +48,7 @@ public class Snoozer : MonoBehaviour
             //Berechnung des Abstandes vom Boden
             Vector3 distance = hitFloor.point + transform.up * 0.5f;
             //Animation der Positionsänderung
-            transform.position = Vector3.Lerp(transform.position, distance, Time.deltaTime * 2);
+            transform.position = Vector3.Lerp(transform.position, distance, Time.deltaTime * 4);
         }
 
         //Raycast nach vorne um Wände zu erkennen 
@@ -59,7 +60,7 @@ public class Snoozer : MonoBehaviour
                 //Rotation von Snoozer in Richtung der Normalen der Wand
                 Quaternion newRotation = Quaternion.FromToRotation(transform.up, hitWall.normal) * transform.rotation;
                 //Animation der Position von Snoozer
-                transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, Time.deltaTime * 3);
+                transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, Time.deltaTime * 2);
             }
         }
 
@@ -74,7 +75,7 @@ public class Snoozer : MonoBehaviour
             if (transform.up != hitDown.normal)
             {
                 Quaternion newRotation = Quaternion.FromToRotation(transform.up, hitDown.normal) * transform.rotation;
-                transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, Time.deltaTime * 3);
+                transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, Time.deltaTime * 2);
             }
         }
 
@@ -94,6 +95,7 @@ public class Snoozer : MonoBehaviour
         {
             Debug.Log("Water");
             blinkEnd = false;
+            animator.enabled = false;
             StartCoroutine(Blink(2, "water"));
         }
 
@@ -102,7 +104,9 @@ public class Snoozer : MonoBehaviour
         {
             Debug.Log("Ziel");
             blinkEnd = false;
+            animator.enabled = false;
             StartCoroutine(Blink(2, "ziel"));
+
         }
 
         //Kollision mit Eulen, Zeit wird um 5 Sekunden verlängert
