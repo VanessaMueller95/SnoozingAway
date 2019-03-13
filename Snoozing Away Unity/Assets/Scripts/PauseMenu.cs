@@ -27,7 +27,7 @@ public class PauseMenu : MonoBehaviour {
 	}
 
     //Aktivieren des Pause Menüs, Anhalten des Spiels
-    void Pause()
+    public void Pause()
     {
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0.0f;
@@ -40,6 +40,18 @@ public class PauseMenu : MonoBehaviour {
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1.0f;
         GameIsPause = false;
+    }
+
+    public void PauseButton()
+    {
+        if (GameIsPause)
+        {
+            Resume();
+        }
+        else
+        {
+            Pause();
+        }
     }
 
     //Neustart des Levels
