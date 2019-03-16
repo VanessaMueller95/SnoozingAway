@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: 2e8fd17b14e6dbe448848db088844230
   - enabled: 1
+    path: Assets/Scenes/levelMenue.unity
+    guid: 986501bfdb9125a4083c8b979fdb40ac
+  - enabled: 1
     path: Assets/Scenes/scene-newWorld.unity
     guid: 374bae264ff243540af431e19383dfe0
   m_configObjects: {}
