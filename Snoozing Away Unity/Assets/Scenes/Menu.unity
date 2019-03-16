@@ -1423,7 +1423,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioManager: {fileID: 1739744756}
-  slider: {fileID: 485724647}
+  sliderMainvolume: {fileID: 485724647}
+  sliderEffectsvolume: {fileID: 1101699727}
 --- !u!1 &771363243
 GameObject:
   m_ObjectHideFlags: 0
@@ -1701,7 +1702,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Volume
+  m_Text: Music Volume
 --- !u!222 &1011829416
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1922,7 +1923,18 @@ MonoBehaviour:
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 729379325}
+        m_MethodName: SetEffectsvolume
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &1439940883
@@ -2235,11 +2247,27 @@ MonoBehaviour:
   sounds:
   - name: BackgroundMusic
     clip: {fileID: 8300000, guid: 700d70f9c8367444eaedb59aa6eed2fb, type: 3}
-    volume: 0.3
+    volume: 1
     pitch: 0
     loop: 1
+    effect: 0
+    source: {fileID: 0}
+  - name: Ticking
+    clip: {fileID: 8300000, guid: 3c48ed049402acc45962f83571f752b6, type: 3}
+    volume: 1
+    pitch: 0
+    loop: 1
+    effect: 1
+    source: {fileID: 0}
+  - name: Ring
+    clip: {fileID: 8300000, guid: cf3cceca77fd7f64bbb38319cd1cf0dc, type: 3}
+    volume: 0.5
+    pitch: 0
+    loop: 0
+    effect: 1
     source: {fileID: 0}
   MasterVolume: 1
+  EffectsVolume: 1
 --- !u!1 &1797976674
 GameObject:
   m_ObjectHideFlags: 0
@@ -2513,7 +2541,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Effect Volume
+  m_Text: Effects Volume
 --- !u!222 &2009278474
 CanvasRenderer:
   m_ObjectHideFlags: 0

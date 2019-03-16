@@ -7,12 +7,14 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour {
 
     public AudioManager audioManager;
-    public Slider slider;
+    public Slider sliderMainvolume;
+    public Slider sliderEffectsvolume;
 
     public void Awake()
     {
         audioManager = FindObjectOfType<AudioManager>();
-        slider.value = audioManager.GetComponent<AudioManager>().MasterVolume;
+        sliderMainvolume.value = audioManager.GetComponent<AudioManager>().MasterVolume;
+        sliderEffectsvolume.value = audioManager.GetComponent<AudioManager>().EffectsVolume;
     }
 
     //Level Starten
@@ -30,6 +32,12 @@ public class MainMenu : MonoBehaviour {
     public void SetMastervolume ()
     {
         //audioManager = FindObjectOfType<AudioManager>();
-        audioManager.GetComponent<AudioManager>().MasterVolume = slider.value;
+        audioManager.GetComponent<AudioManager>().MasterVolume = sliderMainvolume.value;
+    }
+
+    public void SetEffectsvolume()
+    {
+        //audioManager = FindObjectOfType<AudioManager>();
+        audioManager.GetComponent<AudioManager>().EffectsVolume = sliderEffectsvolume.value;
     }
 }

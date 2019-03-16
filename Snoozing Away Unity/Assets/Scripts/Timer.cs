@@ -45,6 +45,8 @@ public class Timer : MonoBehaviour {
     void timerEnd()
     {
         //Status wird aktualisiert, die Zeit angehalten und das Menü aktiviert
+        FindObjectOfType<AudioManager>().Stop("Ticking");
+        FindObjectOfType<AudioManager>().Play("Ring");
         timerActive = false;
         Time.timeScale = 0f;
         restartMenuUI.SetActive(true);

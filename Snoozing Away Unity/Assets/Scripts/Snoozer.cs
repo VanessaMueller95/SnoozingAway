@@ -148,18 +148,21 @@ public class Snoozer : MonoBehaviour
         if (state == "start")
         {
             GameObject.Find("TimerCanvas").GetComponent<Timer>().timerActive = true;
+            FindObjectOfType<AudioManager>().Play("Ticking");
         }
 
         if (state == "water")
         {
             restartMenuUI.SetActive(true);
             Time.timeScale = 0f;
+            FindObjectOfType<AudioManager>().Stop("Ticking");
         }
 
         if (state == "ziel")
         {
             wonMenuUI.SetActive(true);
             Time.timeScale = 0f;
+            FindObjectOfType<AudioManager>().Stop("Ticking");
         }
     }
 }

@@ -10,8 +10,11 @@ public class AudioManager : MonoBehaviour {
     [Range(0f, 1f)]
     public float MasterVolume;
 
-	// Use this for initialization
-	void Awake () {
+    [Range(0f, 1f)]
+    public float EffectsVolume;
+
+    // Use this for initialization
+    void Awake () {
 
         if (instance == null)
         {
@@ -43,7 +46,14 @@ public class AudioManager : MonoBehaviour {
     {
         foreach (Sound s in sounds)
         {
-            s.source.volume = s.volume * MasterVolume;
+            if (s.effect)
+            {
+                s.source.volume = s.volume * EffectsVolume;
+            } 
+            else
+            {
+                s.source.volume = s.volume * MasterVolume;
+            }
         }
     }
 
@@ -57,5 +67,16 @@ public class AudioManager : MonoBehaviour {
             return;
         }
         s.source.Play();
+    }
+
+    public void Stop(string name)
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        if (s == null)
+        {
+            Debug.LogWarning("Sound: " + name + " not found!");
+            return;
+        }
+        s.source.Stop();
     }
 }

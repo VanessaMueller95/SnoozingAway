@@ -32,6 +32,7 @@ public class PauseMenu : MonoBehaviour {
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0.0f;
         GameIsPause = true;
+        FindObjectOfType<AudioManager>().Stop("Ticking");
     }
 
     //Deaktivieren des Pause Menüs, Fortsetzen des Spiels
@@ -40,6 +41,7 @@ public class PauseMenu : MonoBehaviour {
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1.0f;
         GameIsPause = false;
+        FindObjectOfType<AudioManager>().Play("Ticking");
     }
 
     public void PauseButton()
@@ -57,6 +59,7 @@ public class PauseMenu : MonoBehaviour {
     //Neustart des Levels
     public void Restart()
     {
+        FindObjectOfType<AudioManager>().Stop("Ticking");
         Time.timeScale = 1.0f;
         SceneManager.LoadScene("scene-newWorld");
     }
@@ -73,5 +76,6 @@ public class PauseMenu : MonoBehaviour {
         GameIsPause = false;
         Time.timeScale = 1.0f;
         SceneManager.LoadScene("Menu");
+        FindObjectOfType<AudioManager>().Stop("Ticking");
     }
 }
