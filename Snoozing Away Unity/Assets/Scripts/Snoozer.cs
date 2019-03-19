@@ -24,11 +24,13 @@ public class Snoozer : MonoBehaviour
 
     bool blinkEnd = false;
     public Animator animator;
+    public AudioManager audiomanager;
 
     private void Start()
     {
+        audiomanager = FindObjectOfType<AudioManager>();
         StartCoroutine(Blink(3, "start"));
-        spreadAngle = Quaternion.AngleAxis(4, new Vector3(0, 0, 1));
+        spreadAngle = Quaternion.AngleAxis(10, new Vector3(0, 0, 1));
     }
 
     void Update()
@@ -46,7 +48,7 @@ public class Snoozer : MonoBehaviour
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down) * 10f, out hitFloor, Mathf.Infinity, mask))
         {
             //Berechnung des Abstandes vom Boden
-            Vector3 distance = hitFloor.point + transform.up * 0.5f;
+            Vector3 distance = hitFloor.point + transform.up * 0.6f;
             //Animation der Positionsänderung
             transform.position = Vector3.Lerp(transform.position, distance, Time.deltaTime * 4);
         }
@@ -75,7 +77,7 @@ public class Snoozer : MonoBehaviour
             if (transform.up != hitDown.normal)
             {
                 Quaternion newRotation = Quaternion.FromToRotation(transform.up, hitDown.normal) * transform.rotation;
-                transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, Time.deltaTime * 2);
+                transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, Time.deltaTime * 4);
             }
         }
 
@@ -97,6 +99,7 @@ public class Snoozer : MonoBehaviour
             blinkEnd = false;
             animator.enabled = false;
             StartCoroutine(Blink(2, "water"));
+            audiomanager.Play("Water");
         }
 
         //Kollision mit dem Ziel, Gewonnen Screen
@@ -115,6 +118,7 @@ public class Snoozer : MonoBehaviour
             Debug.Log("Eule");
             Destroy(col.gameObject);
             GameObject.Find("TimerCanvas").GetComponent<Timer>().targetTime += (float)5.0;
+            audiomanager.Play("Owl");
         }
 
         //Kollision mit Raben, Zeit wird um 5 Sekunden reduziert
@@ -123,6 +127,7 @@ public class Snoozer : MonoBehaviour
             Debug.Log("Rabe");
             Destroy(col.gameObject);
             GameObject.Find("TimerCanvas").GetComponent<Timer>().targetTime -= (float)5.0;
+            audiomanager.Play("Raven");
         }
     }
 
@@ -148,21 +153,21 @@ public class Snoozer : MonoBehaviour
         if (state == "start")
         {
             GameObject.Find("TimerCanvas").GetComponent<Timer>().timerActive = true;
-            FindObjectOfType<AudioManager>().Play("Ticking");
+            audiomanager.Play("Ticking");
         }
 
         if (state == "water")
         {
             restartMenuUI.SetActive(true);
             Time.timeScale = 0f;
-            FindObjectOfType<AudioManager>().Stop("Ticking");
+            audiomanager.Stop("Ticking");
         }
 
         if (state == "ziel")
         {
             wonMenuUI.SetActive(true);
             Time.timeScale = 0f;
-            FindObjectOfType<AudioManager>().Stop("Ticking");
+            audiomanager.Stop("Ticking");
         }
     }
 }

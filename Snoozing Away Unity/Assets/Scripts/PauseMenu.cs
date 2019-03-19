@@ -8,6 +8,7 @@ public class PauseMenu : MonoBehaviour {
     //Variablen für den Status und das Pause UI Element
     public static bool GameIsPause = false;
     public GameObject pauseMenuUI;
+    public GameObject helpMenuUI;
 
     void Update () {
         //Pause Menü aktivieren oder deaktivieren durch die Taste P
@@ -35,10 +36,26 @@ public class PauseMenu : MonoBehaviour {
         FindObjectOfType<AudioManager>().Stop("Ticking");
     }
 
+    public void OpenHelp()
+    {
+        helpMenuUI.SetActive(true);
+        Time.timeScale = 0.0f;
+        GameIsPause = true;
+        FindObjectOfType<AudioManager>().Stop("Ticking");
+    }
+
     //Deaktivieren des Pause Menüs, Fortsetzen des Spiels
     public void Resume()
     {
         pauseMenuUI.SetActive(false);
+        Time.timeScale = 1.0f;
+        GameIsPause = false;
+        FindObjectOfType<AudioManager>().Play("Ticking");
+    }
+
+    public void ResumeFromHelp()
+    {
+        helpMenuUI.SetActive(false);
         Time.timeScale = 1.0f;
         GameIsPause = false;
         FindObjectOfType<AudioManager>().Play("Ticking");
@@ -61,13 +78,15 @@ public class PauseMenu : MonoBehaviour {
     {
         FindObjectOfType<AudioManager>().Stop("Ticking");
         Time.timeScale = 1.0f;
-        SceneManager.LoadScene("scene-newWorld");
+        SceneManager.LoadScene("level1");
     }
 
     //Laden des Menüs
-    public void LoadMenu()
+    public void LoadLevelMenue()
     {
-
+        GameIsPause = false;
+        Time.timeScale = 1.0f;
+        SceneManager.LoadScene("LevelMenue");
     }
 
     //Level beenden, Rückkehr in den Startbildschirm
@@ -76,6 +95,5 @@ public class PauseMenu : MonoBehaviour {
         GameIsPause = false;
         Time.timeScale = 1.0f;
         SceneManager.LoadScene("Menu");
-        FindObjectOfType<AudioManager>().Stop("Ticking");
     }
 }

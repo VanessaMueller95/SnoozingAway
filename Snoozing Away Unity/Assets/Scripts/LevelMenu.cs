@@ -7,7 +7,7 @@ public class LevelMenu : MonoBehaviour {
 
     public void LoadLevel1()
     {
-        SceneManager.LoadScene("scene-newWorld");
+        SceneManager.LoadScene("level1");
     }
 
     public void LoadMainMenue()
