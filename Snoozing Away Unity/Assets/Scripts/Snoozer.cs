@@ -30,7 +30,7 @@ public class Snoozer : MonoBehaviour
     {
         audiomanager = FindObjectOfType<AudioManager>();
         StartCoroutine(Blink(3, "start"));
-        spreadAngle = Quaternion.AngleAxis(10, new Vector3(0, 0, 1));
+        spreadAngle = Quaternion.AngleAxis(4, new Vector3(0, 0, 1));
     }
 
     void Update()

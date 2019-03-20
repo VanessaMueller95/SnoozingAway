@@ -2260,7 +2260,7 @@ MonoBehaviour:
     effect: 1
     source: {fileID: 0}
   - name: Ring
-    clip: {fileID: 8300000, guid: cf3cceca77fd7f64bbb38319cd1cf0dc, type: 3}
+    clip: {fileID: 8300000, guid: be2c0fb7c6a61e64cb0cb0a661d4a100, type: 3}
     volume: 0.5
     pitch: 0
     loop: 0

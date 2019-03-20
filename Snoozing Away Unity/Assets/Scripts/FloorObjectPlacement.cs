@@ -65,6 +65,7 @@ public class FloorObjectPlacement : MonoBehaviour
             point.x = (float)(x) * gridX - halfSlots.x + transform.position.x + gridX / 2.0f;
             point.z = (float)(z) * gridY - halfSlots.z + transform.position.z + gridY / 2.0f;
 
+            /*
             //Erzeugung eines Objekts, dass die Verfügbarkeit der Fläche darstellt
             if (lastPos.x != x || lastPos.z != z || areaObject == null)
             {
@@ -77,7 +78,7 @@ public class FloorObjectPlacement : MonoBehaviour
                     Destroy(areaObject);
                 }
                 areaObject = (GameObject)Instantiate(usedSpace[x, z] == 0 ? prefabOK : prefabFail, point, Quaternion.Euler(0, prefabRotationX, 0));
-            }
+            }*/
 
             // Bei Linksklick wird das Objekt in die Szene eingefügt und die Position als besetzt makiert
             if (Input.GetMouseButtonDown(0) && mouseClick == false)
@@ -98,6 +99,7 @@ public class FloorObjectPlacement : MonoBehaviour
 
         }
 
+        /*
         //Wenn die Maus nicht mehr auf der Fläche liegt wird das Preview-Objekt zerstört 
         else
         {
@@ -111,7 +113,7 @@ public class FloorObjectPlacement : MonoBehaviour
                 Destroy(areaObject);
                 areaObject = null;
             }
-        }
+        }*/
     }
 
     //Ziel des Mauszeigers wird zurückgegeben 

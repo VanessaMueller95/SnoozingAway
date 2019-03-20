@@ -77,6 +77,7 @@ public class PauseMenu : MonoBehaviour {
     public void Restart()
     {
         FindObjectOfType<AudioManager>().Stop("Ticking");
+        FindObjectOfType<AudioManager>().Stop("Ring");
         Time.timeScale = 1.0f;
         SceneManager.LoadScene("level1");
     }
@@ -84,6 +85,7 @@ public class PauseMenu : MonoBehaviour {
     //Laden des Menüs
     public void LoadLevelMenue()
     {
+        FindObjectOfType<AudioManager>().Stop("Ring");
         GameIsPause = false;
         Time.timeScale = 1.0f;
         SceneManager.LoadScene("LevelMenue");
@@ -92,6 +94,7 @@ public class PauseMenu : MonoBehaviour {
     //Level beenden, Rückkehr in den Startbildschirm
     public void QuitGame()
     {
+        FindObjectOfType<AudioManager>().Stop("Ring");
         GameIsPause = false;
         Time.timeScale = 1.0f;
         SceneManager.LoadScene("Menu");
