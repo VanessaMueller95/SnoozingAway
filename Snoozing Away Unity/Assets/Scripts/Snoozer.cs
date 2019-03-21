@@ -48,7 +48,7 @@ public class Snoozer : MonoBehaviour
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down) * 10f, out hitFloor, Mathf.Infinity, mask))
         {
             //Berechnung des Abstandes vom Boden
-            Vector3 distance = hitFloor.point + transform.up * 0.6f;
+            Vector3 distance = hitFloor.point + transform.up * 0.45f;
             //Animation der Positionsänderung
             transform.position = Vector3.Lerp(transform.position, distance, Time.deltaTime * 4);
         }
@@ -62,7 +62,7 @@ public class Snoozer : MonoBehaviour
                 //Rotation von Snoozer in Richtung der Normalen der Wand
                 Quaternion newRotation = Quaternion.FromToRotation(transform.up, hitWall.normal) * transform.rotation;
                 //Animation der Position von Snoozer
-                transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, Time.deltaTime * 2);
+                transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, Time.deltaTime * 5);
             }
         }
 
