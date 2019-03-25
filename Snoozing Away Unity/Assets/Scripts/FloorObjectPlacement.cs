@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System;
 
 //Script für die Plazierung von Wegfeldern 
@@ -36,7 +35,6 @@ public class FloorObjectPlacement : MonoBehaviour
     // Berechnung des Gitters und Initialisierung des Platz Arrays 
     void Start()
     {
-        Debug.Log(GetComponent<Renderer>().bounds.size);
         Vector3 slots = GetComponent<Renderer>().bounds.size*2;
         usedSpace = new int[Mathf.CeilToInt(slots.x), Mathf.CeilToInt(slots.z)];
         for (var x = 0; x < Mathf.CeilToInt(slots.x); x++)
@@ -52,7 +50,7 @@ public class FloorObjectPlacement : MonoBehaviour
     {
         Vector3 point;
 
-        // Test auf Maus-Ray Collision
+        // Test auf Maus-Raycast Collision mit der Fläche
         if (getTargetLocation(out point))
         {
             Vector3 halfSlots = GetComponent<Renderer>().bounds.size / 2.0f;
@@ -66,13 +64,11 @@ public class FloorObjectPlacement : MonoBehaviour
             point.z = (float)(z) * gridY - halfSlots.z + transform.position.z + gridY / 2.0f;
 
             /*
-            //Erzeugung eines Objekts, dass die Verfügbarkeit der Fläche darstellt
+            //Erzeugung eines Objekts, dass die Verfügbarkeit der Fläche beim Hovern darstellt, für Mobile Version ausgeblendet
             if (lastPos.x != x || lastPos.z != z || areaObject == null)
             {
                 lastPos.x = x;
-                Debug.Log(x);
                 lastPos.z = z;
-                Debug.Log(z);
                 if (areaObject != null)
                 {
                     Destroy(areaObject);
@@ -100,7 +96,7 @@ public class FloorObjectPlacement : MonoBehaviour
         }
 
         /*
-        //Wenn die Maus nicht mehr auf der Fläche liegt wird das Preview-Objekt zerstört 
+        //Wenn die Maus nicht mehr auf der Fläche liegt wird das Preview-Objekt zerstört, für Mobile Version ausgeblendet
         else
         {
             if (placementObject)

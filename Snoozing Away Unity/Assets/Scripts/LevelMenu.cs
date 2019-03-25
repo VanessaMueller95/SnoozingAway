@@ -5,11 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class LevelMenu : MonoBehaviour {
 
+    //Läd Level 1
     public void LoadLevel1()
     {
         SceneManager.LoadScene("level1");
     }
 
+    //Läd das Hauptmenü
     public void LoadMainMenue()
     {
         SceneManager.LoadScene("Menu");

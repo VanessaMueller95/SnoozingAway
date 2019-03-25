@@ -26,7 +26,7 @@ public class ArrowButtons : MonoBehaviour
         //Sollen Treppen plaziert werden, werden alle nötigen Skripte der Treppenplatzhalter aktiviert
         if (actualButton == "Stairs") {
 
-            //Skript für die PLazierung der Pfeilfelder wird deaktiviert
+            //Skript für die Platzierung der Pfeilfelder wird deaktiviert
             DeactivateArrows();
 
             //Skript für die Treppen aktiviert
@@ -68,6 +68,7 @@ public class ArrowButtons : MonoBehaviour
                     break;
             }
         }
+
         //Rückwärtspfeil
         else if (actualButton == "Backward")
         {
@@ -95,6 +96,8 @@ public class ArrowButtons : MonoBehaviour
                     break;
             }
         }
+
+        //Links-Pfeil
         else if (actualButton == "Left")
         {
             Debug.Log("Linker-Pfeil gedrückt");
@@ -121,6 +124,8 @@ public class ArrowButtons : MonoBehaviour
                     break;
             }
         }
+
+        //Rechts-Pfeil
         else if (actualButton == "Right")
         {
             Debug.Log("Rechter-Pfeil gedrückt");
@@ -149,6 +154,7 @@ public class ArrowButtons : MonoBehaviour
         }
     }
 
+    //Funktion um die Treppen zu deaktivieren
     public void DeactivateStairs()
     {
         GameObject.Find("Plazierung_Treppen1").GetComponent<FloorObjectPlacement>().enabled = false;
@@ -160,6 +166,7 @@ public class ArrowButtons : MonoBehaviour
         GameObject.Find("Plazierung_Brücken1_2").GetComponent<FloorObjectPlacement>().enabled = false;
     }
 
+    //Funktion um die Treppen zu aktivieren
     public void ActivateStairs()
     {
         GameObject.Find("Plazierung_Treppen1").GetComponent<FloorObjectPlacement>().enabled = true;
@@ -171,11 +178,13 @@ public class ArrowButtons : MonoBehaviour
         GameObject.Find("Plazierung_Brücken1_2").GetComponent<FloorObjectPlacement>().enabled = true;
     }
 
+    //Funktion um die Pfeile zu deaktivieren
     public void DeactivateArrows()
     {
         floor.GetComponent<FloorObjectPlacement>().enabled = false;
     }
 
+    //Funktion um die Pfeile zu aktivieren
     public void ActivateArrows()
     {
         floor.GetComponent<FloorObjectPlacement>().enabled = true;

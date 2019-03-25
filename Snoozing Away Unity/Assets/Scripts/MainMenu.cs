@@ -1,11 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour {
 
+    //Variablen für den Audiomanager und die Volume Slider
     public AudioManager audioManager;
     public Slider sliderMainvolume;
     public Slider sliderEffectsvolume;
@@ -17,10 +17,10 @@ public class MainMenu : MonoBehaviour {
         sliderEffectsvolume.value = audioManager.GetComponent<AudioManager>().EffectsVolume;
     }
 
-    //Level Starten
+    //Levelmenü laden
     public void PlayGame()
     {
-        SceneManager.LoadScene("levelMenue");
+        SceneManager.LoadScene("levelMenu");
     }
 
     //Spiel beenden
@@ -29,15 +29,15 @@ public class MainMenu : MonoBehaviour {
         Application.Quit();
     }
 
+    //Anpassen des Master-Volumes
     public void SetMastervolume ()
     {
-        //audioManager = FindObjectOfType<AudioManager>();
         audioManager.GetComponent<AudioManager>().MasterVolume = sliderMainvolume.value;
     }
 
+    //Anpassen des Effects-Volumes
     public void SetEffectsvolume()
     {
-        //audioManager = FindObjectOfType<AudioManager>();
         audioManager.GetComponent<AudioManager>().EffectsVolume = sliderEffectsvolume.value;
     }
 }

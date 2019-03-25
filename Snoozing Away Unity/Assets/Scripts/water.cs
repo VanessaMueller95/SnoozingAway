@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class water : MonoBehaviour
+public class Water : MonoBehaviour
 {
+    //Einfache Perlin Noise animation für die Wasseroberfläche 
     public float perlinScale = 4.56f;
     public float waveSpeed = 1f;
     public float waveHeight = 2f;

@@ -1,7 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Snoozer : MonoBehaviour
 {
@@ -14,14 +12,15 @@ public class Snoozer : MonoBehaviour
     RaycastHit hitFloor;
     RaycastHit hitWall;
 
-    //LayerMaske, die es Raycasts ermöglicht bestimmte Ebenen zu ignorieren, kann über den Editor eingestellt werden
+    //LayerMaske, die es Raycasts ermöglicht bestimmte Ebenen zu ignorieren, kann über den Inspektor eingestellt werden
     public LayerMask mask;
 
-    //Variablen für die 3 Menüarten, müssen über den Editor gesetzt werden
+    //Variablen für die 3 Menüarten, können über den Inspektor gesetzt werden
     public GameObject restartMenuUI;
     public GameObject wonMenuUI;
     public Quaternion spreadAngle;
 
+    //Variablen für die Animation und den Audiomanager
     bool blinkEnd = false;
     public Animator animator;
     public AudioManager audiomanager;
@@ -29,12 +28,17 @@ public class Snoozer : MonoBehaviour
     private void Start()
     {
         audiomanager = FindObjectOfType<AudioManager>();
+
+        //3 Sekunden Blinken des Charakters bevor die Zeit startet
         StartCoroutine(Blink(3, "start"));
+
+        //Festlegen des Winkels für den Abwärts-Raycast
         spreadAngle = Quaternion.AngleAxis(4, new Vector3(0, 0, 1));
     }
 
     void Update()
     {
+        //Snoozer läuft gerade au, wenn er nicht Binkt
         if (blinkEnd == true)
         {
             Walk();
@@ -131,13 +135,16 @@ public class Snoozer : MonoBehaviour
         }
     }
 
+    //Funktion, die den Charakter beim Start, Ende oder bei bestimmten Kollisionen blinken lässt
     IEnumerator Blink(float waitTime, string state)
     {
-        Debug.Log("In Funktion");
+        //Berechnung der Endzeit
         var endTime = Time.time + waitTime;
 
+        //Holt sich alle Render-Objekte von dem Charakter
         Renderer[] rs = GetComponentsInChildren<Renderer>();
 
+        //Schaltet die Renderer regelmäßig an und aus -> Blinken
         while (Time.time < endTime)
         {
             Debug.Log("Aktiv");
@@ -147,15 +154,19 @@ public class Snoozer : MonoBehaviour
             foreach (Renderer r in rs) { r.enabled = true; }
             yield return new WaitForSeconds(0.2f);
         }
+
         blinkEnd = true;
         animator.enabled = true;
 
+        //Anhängig von dem Grund für das Blinken werden Folgeaktionen ausgeführt am Ende:
+        //Bei Start wird das Ticken aktiviert und der Timer gestartet
         if (state == "start")
         {
             GameObject.Find("TimerCanvas").GetComponent<Timer>().timerActive = true;
             audiomanager.Play("Ticking");
         }
 
+        //Bei Wasser wird das Restart Menü aufgerufen, die Zeit angehalten und das Ticken beendet
         if (state == "water")
         {
             restartMenuUI.SetActive(true);
@@ -163,6 +174,7 @@ public class Snoozer : MonoBehaviour
             audiomanager.Stop("Ticking");
         }
 
+        //Im Ziel wird das Gewonnen Menü aufgerufen, die Zeit angehalten und das Ticken beendet
         if (state == "ziel")
         {
             wonMenuUI.SetActive(true);

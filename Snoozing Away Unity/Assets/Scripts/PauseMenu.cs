@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour {
 
-    //Variablen für den Status und das Pause UI Element
+    //Variablen für den Status und die Pause UI Elemente
     public static bool GameIsPause = false;
     public GameObject pauseMenuUI;
     public GameObject helpMenuUI;
@@ -27,7 +25,7 @@ public class PauseMenu : MonoBehaviour {
 		
 	}
 
-    //Aktivieren des Pause Menüs, Anhalten des Spiels
+    //Aktivieren des Pause Menüs, Anhalten des Spiels, Ticken-Sound stoppen
     public void Pause()
     {
         pauseMenuUI.SetActive(true);
@@ -36,15 +34,7 @@ public class PauseMenu : MonoBehaviour {
         FindObjectOfType<AudioManager>().Stop("Ticking");
     }
 
-    public void OpenHelp()
-    {
-        helpMenuUI.SetActive(true);
-        Time.timeScale = 0.0f;
-        GameIsPause = true;
-        FindObjectOfType<AudioManager>().Stop("Ticking");
-    }
-
-    //Deaktivieren des Pause Menüs, Fortsetzen des Spiels
+    //Deaktivieren des Pause Menüs, Fortsetzen des Spiels, Ticken-Sound starten
     public void Resume()
     {
         pauseMenuUI.SetActive(false);
@@ -53,6 +43,16 @@ public class PauseMenu : MonoBehaviour {
         FindObjectOfType<AudioManager>().Play("Ticking");
     }
 
+    //Öffnen der Hilfe
+    public void OpenHelp()
+    {
+        helpMenuUI.SetActive(true);
+        Time.timeScale = 0.0f;
+        GameIsPause = true;
+        FindObjectOfType<AudioManager>().Stop("Ticking");
+    }
+
+    //Schließen der Hilfe
     public void ResumeFromHelp()
     {
         helpMenuUI.SetActive(false);
@@ -61,6 +61,7 @@ public class PauseMenu : MonoBehaviour {
         FindObjectOfType<AudioManager>().Play("Ticking");
     }
 
+    //Funktion für den Pause Icon der Mobilen Version
     public void PauseButton()
     {
         if (GameIsPause)
@@ -82,13 +83,13 @@ public class PauseMenu : MonoBehaviour {
         SceneManager.LoadScene("level1");
     }
 
-    //Laden des Menüs
+    //Laden der Levelauswahl
     public void LoadLevelMenue()
     {
         FindObjectOfType<AudioManager>().Stop("Ring");
         GameIsPause = false;
         Time.timeScale = 1.0f;
-        SceneManager.LoadScene("LevelMenue");
+        SceneManager.LoadScene("LevelMenu");
     }
 
     //Level beenden, Rückkehr in den Startbildschirm

@@ -1,14 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
     public GameObject targetObject;
     private float targetAngle = 0;
     const float rotationAmount = 1.5f;
-    public float rDistance = 1.0f;
-    public float rSpeed = 1.0f;
 
     //Tracking der aktuellen Richtung
     string[] directionArray = new string[] {"Front","Right","Back","Left"};
@@ -69,7 +65,7 @@ public class CameraMovement : MonoBehaviour
                             //Festlegen des Zielwinkels (Wie viel muss rotiert werden)
                             targetAngle -= 90.0f;
 
-                            //Tracking der Perspektive für die Verwendung in anderen Scripten, Linksklick reduziert den Counter für das Richtungs-Array
+                            //Tracking der Perspektive für die Verwendung in anderen Scripten
                             directionCounter--;
 
                             //Erreicht der Index des Arrays 0, wird auf den letzten Eintrag gesprungen
@@ -94,9 +90,10 @@ public class CameraMovement : MonoBehaviour
                         {   
                             Debug.Log("Left Swipe");
 
-                            //Selbes Vorgehen nur wird das Feld nach Rechts gedreht und des Counter des Richtungs-Arrays wird um eins erhöht
+                            //Festlegen des Zielwinkels (Wie viel muss rotiert werden)
                             targetAngle += 90.0f;
 
+                            //Tracking der Perspektive für die Verwendung in anderen Scripten
                             directionCounter++;
 
                             if (directionCounter > 3)
@@ -127,7 +124,7 @@ public class CameraMovement : MonoBehaviour
             //Festlegen des Zielwinkels (Wie viel muss rotiert werden)
             targetAngle -= 90.0f;
 
-            //Tracking der Perspektive für die Verwendung in anderen Scripten, Linksklick reduziert den Counter für das Richtungs-Array
+            //Tracking der Perspektive für die Verwendung in anderen Scripten
             directionCounter--;
 
             //Erreicht der Index des Arrays 0, wird auf den letzten Eintrag gesprungen
@@ -147,7 +144,7 @@ public class CameraMovement : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            //Selbes Vorgehen nur wird das Feld nach Rechts gedreht und des Counter des Richtungs-Arrays wird um eins erhöht
+            
             targetAngle += 90.0f;
 
             directionCounter++;
@@ -159,8 +156,7 @@ public class CameraMovement : MonoBehaviour
 
             direction = directionArray[directionCounter];
             Debug.Log(direction);
-
-            //Aktualisiert die Prefabs der Pfeilfelder passend zur neuen Perspektive
+            
             if (GameObject.Find("FieldController").GetComponent<ArrowButtons>().actualButton != null)
             {
                 GameObject.Find("FieldController").GetComponent<ArrowButtons>().OnClickDirectionButton(GameObject.Find("FieldController").GetComponent<ArrowButtons>().actualButton);
@@ -177,11 +173,6 @@ public class CameraMovement : MonoBehaviour
     //Rotation
     protected void Rotate()
     {
-        //float step = rSpeed * Time.deltaTime;
-        //float orbitCircumfrance = 2F * rDistance * Mathf.PI;
-        //float distanceDegrees = (rSpeed / orbitCircumfrance) * 360;
-        //float distanceRadians = (rSpeed / orbitCircumfrance) * 2 * Mathf.PI;
-
         if (targetAngle > 0)
         {
             transform.RotateAround(targetObject.transform.position, Vector3.up, -rotationAmount);
