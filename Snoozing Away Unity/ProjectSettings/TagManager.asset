@@ -3,12 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Interact
-  - water
-  - ziel
-  - eule
-  - rabe
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -18,8 +13,8 @@ TagManager:
   - UI
   - 
   - 
-  - PostProcessing
-  - SnoozerIgnore
+  - 
+  - 
   - 
   - 
   - 
