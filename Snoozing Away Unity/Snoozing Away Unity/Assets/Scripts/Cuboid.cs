@@ -24,8 +24,6 @@ public class Cuboid : MonoBehaviour
         public int code = 0; //0: Boden; 1: Wasser; 2: Eule; 3: Raben; 4:Treppe
 
         bool[] walkable = {false, false, false, false, false, false};
-
-        public string tag = "Untagged";
     }
 
     protected class Cursor {
@@ -220,6 +218,7 @@ public class Cuboid : MonoBehaviour
         }
     }
 
+    //Methode, um das Objekt zu wechseln, das plaziert wird
     void changePlacementObject()
     {
         if(EditorCursor.code + 1 < cellObjects.Length)
@@ -230,6 +229,8 @@ public class Cuboid : MonoBehaviour
         {
             EditorCursor.code = 0;
         }
+        Debug.Log("Aktuelles Objekt: " + EditorCursor.code);
+        Debug.Log("0: Boden; 1: Wasser; 2: Eule; 3: Raben; 4:Treppe");
     }
 
     void UpdateVisuals()
