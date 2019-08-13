@@ -60,7 +60,7 @@ public class WalkNew : MonoBehaviour
 
         if (Physics.Raycast(transform.position + transform.up, transform.TransformDirection(Vector3.down) * 1f, out hitFloor, Mathf.Infinity))
         {
-            Vector3 distance = hitFloor.point + transform.up * 0.1f;
+            Vector3 distance = hitFloor.point + transform.up * 0.2f;
             //Debug.Log("Boden getroffen, Abstand: " + hitDown.distance);
             //Debug.Log("Walking on: " + hitFloor.collider.gameObject.tag);
             //Berechnung des Abstandes vom Boden
@@ -90,7 +90,7 @@ public class WalkNew : MonoBehaviour
         
         
         //Raycast nach unten um zu Testen ob es einen Boden gibt und Positionierung an Boden-Normale
-        if (Physics.Raycast(transform.position, (Quaternion.AngleAxis(-80, transform.right) * (transform.transform.forward * -1)) * 10f, out hitDown, Mathf.Infinity))
+        if (Physics.Raycast(transform.position, (Quaternion.AngleAxis(-82, transform.right) * (transform.transform.forward * -1)) * 10f, out hitDown, Mathf.Infinity))
         {
             //Test ob Bodennormale Charakter Normalen entspricht
             if (hitDown.collider.gameObject.tag != "stairs" && transform.up != hitDown.normal)
