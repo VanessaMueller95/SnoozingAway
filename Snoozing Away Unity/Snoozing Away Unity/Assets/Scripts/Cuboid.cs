@@ -44,7 +44,7 @@ public class Cuboid : MonoBehaviour
     private Cursor EditorCursor = new Cursor();
 
     // store cell data - temporary storage also for editor
-    private string cellDataFile = "/cells.dat";
+    private string cellDataFile = "/level1.dat";
 
     private Vector3 [] cameraPoints;
     private int currentCameraPos = 1;
@@ -276,7 +276,7 @@ public class Cuboid : MonoBehaviour
 
     void Save()
     {
-        string dataPath = Application.persistentDataPath + cellDataFile;
+        string dataPath = "Assets/LevelData" + cellDataFile;
 
         FileStream file;
 
@@ -291,7 +291,8 @@ public class Cuboid : MonoBehaviour
     bool Read()
     {
 
-        string dataPath = Application.persistentDataPath + cellDataFile;
+        string dataPath = "Assets/LevelData" + cellDataFile;
+        Debug.Log(dataPath);
 
         FileStream file;
 

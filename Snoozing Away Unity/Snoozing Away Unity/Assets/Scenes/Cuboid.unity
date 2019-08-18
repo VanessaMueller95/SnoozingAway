@@ -145,8 +145,8 @@ MonoBehaviour:
   cellObjects:
   - {fileID: 8898893220950600225, guid: 5645b24d547927146a159192176e1bc1, type: 3}
   - {fileID: 3442413886380485133, guid: 247a09f279b31874bae3898ec25da386, type: 3}
-  - {fileID: 1208500334323116131, guid: b2147155c6742433bbf459c948f99d87, type: 3}
-  - {fileID: 9041227224074336224, guid: 5359259fd388a4b4e9702b5a8e397a56, type: 3}
+  - {fileID: 6608495889113816426, guid: e87dc5a63dc70c649be179174a7ef223, type: 3}
+  - {fileID: 89883352015820901, guid: b826213a39a36d144a23efca6f66da92, type: 3}
   - {fileID: 1798332773741562372, guid: 6187a77ee5a0a8545bf90864923995e5, type: 3}
   dimensions: {x: 8, y: 8, z: 8}
   cellSize: 2.01
@@ -191,7 +191,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 133173480}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalPosition: {x: 0, y: -0.845, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2120233553}
@@ -401,7 +401,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400012, guid: 963fab5e434b76a4b97910410ee04333, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.37
+      value: 0.069
       objectReference: {fileID: 0}
     - target: {fileID: 400012, guid: 963fab5e434b76a4b97910410ee04333, type: 3}
       propertyPath: m_LocalPosition.z
