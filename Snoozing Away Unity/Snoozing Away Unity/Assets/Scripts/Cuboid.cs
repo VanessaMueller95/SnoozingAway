@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
@@ -59,12 +58,13 @@ public class Cuboid : MonoBehaviour
 
         // create cells - welcome to Unity vectors having no trace
         cells = new Cell[dimensions.x * dimensions.y * dimensions.z];
+        Debug.Log(cells.Length);
 
         for(int i = 0; i < cells.Length;i++) {
             cells[i] = new Cell();
         }
 
-        var zoom  = 2.0f;
+        var zoom  = 1.4f;
 
         var camDist = new Vector3(dimensions.x * cellSize * zoom,
             dimensions.x * cellSize * zoom,
@@ -276,7 +276,7 @@ public class Cuboid : MonoBehaviour
 
     void Save()
     {
-        string dataPath = "Assets/LevelData" + cellDataFile;
+        string dataPath = Application.streamingAssetsPath + cellDataFile;
 
         FileStream file;
 
@@ -291,7 +291,7 @@ public class Cuboid : MonoBehaviour
     bool Read()
     {
 
-        string dataPath = "Assets/LevelData" + cellDataFile;
+        string dataPath = Application.streamingAssetsPath + cellDataFile;
         Debug.Log(dataPath);
 
         FileStream file;

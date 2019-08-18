@@ -1,46 +1,56 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class Placement : MonoBehaviour
+public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public GameObject prefabPlacementObject;
-    public GameObject dragObject;
 
-    bool mouseClick = false;
     GameObject hitObject = null;
     Vector3 normal;
 
     private GameObject instancedItem;
     private GameObject parent;
     Vector3 startPosition;
-    
-    void Update()
+
+    public void OnBeginDrag(PointerEventData eventData)
     {
+        Debug.Log("DRAG AKTIV");
+        parent = GameObject.Find("UI");
+        startPosition = gameObject.transform.position;
+        instancedItem = Instantiate(gameObject, parent.transform);
+        instancedItem.GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        instancedItem.transform.position = Input.mousePosition;
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        Destroy(instancedItem);
+
         Vector3 point;
 
         if (getTargetLocation(out point))
         {
             Vector3 placentPosition = hitObject.transform.position + normal;
 
-            if (Input.GetMouseButtonDown(0) && mouseClick == false)
+            var startRot = Quaternion.LookRotation(normal) * Quaternion.Euler(90, 0, 0);
+            if (normal == new Vector3(0, -1, 0))
             {
-                mouseClick = true;
-                var startRot = Quaternion.LookRotation(normal) * Quaternion.Euler(90, 0, 0);
-                if(normal== new Vector3(0, -1, 0))
-                {
-                    startRot = Quaternion.LookRotation(normal) * Quaternion.Euler(90, 180, 0);
-                }
-                if (normal == new Vector3(0, 1, 0))
-                {
-                    startRot = Quaternion.LookRotation(normal) * Quaternion.Euler(90, -180, 0);
-                }
-                Debug.Log("Rotation: " + startRot);
-                Instantiate(prefabPlacementObject, placentPosition, startRot);
-                
+                startRot = Quaternion.LookRotation(normal) * Quaternion.Euler(90, 180, 0);
             }
-            else if (!Input.GetMouseButtonDown(0))
+            if (normal == new Vector3(0, 1, 0))
             {
-                mouseClick = false;
+                startRot = Quaternion.LookRotation(normal) * Quaternion.Euler(90, -180, 0);
             }
+            Debug.Log("Rotation: " + startRot);
+            Instantiate(prefabPlacementObject, placentPosition, startRot);
+
         }
     }
 
@@ -66,10 +76,5 @@ public class Placement : MonoBehaviour
         //wenn der Mauszeiger nicht auf der Fläche liegt wird false zurückgegeben 
         point = Vector3.zero;
         return false;
-    }
-
-    public void changePlacementObject(GameObject place)
-    {
-        prefabPlacementObject = place;
     }
 }
