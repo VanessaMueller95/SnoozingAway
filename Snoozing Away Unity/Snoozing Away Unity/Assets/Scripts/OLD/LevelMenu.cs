@@ -8,7 +8,7 @@ public class LevelMenu : MonoBehaviour {
     //Läd Level 1
     public void LoadLevel1()
     {
-        SceneManager.LoadScene("level1");
+        SceneManager.LoadScene("Cuboid");
     }
 
     //Läd das Hauptmenü

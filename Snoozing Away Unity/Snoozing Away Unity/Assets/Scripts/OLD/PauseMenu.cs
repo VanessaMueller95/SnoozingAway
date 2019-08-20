@@ -31,7 +31,7 @@ public class PauseMenu : MonoBehaviour {
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0.0f;
         GameIsPause = true;
-        FindObjectOfType<AudioManager>().Stop("Ticking");
+        //FindObjectOfType<AudioManager>().Stop("Ticking");
     }
 
     //Deaktivieren des Pause Menüs, Fortsetzen des Spiels, Ticken-Sound starten
@@ -40,7 +40,7 @@ public class PauseMenu : MonoBehaviour {
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1.0f;
         GameIsPause = false;
-        FindObjectOfType<AudioManager>().Play("Ticking");
+        //FindObjectOfType<AudioManager>().Play("Ticking");
     }
 
     //Öffnen der Hilfe
@@ -49,7 +49,7 @@ public class PauseMenu : MonoBehaviour {
         helpMenuUI.SetActive(true);
         Time.timeScale = 0.0f;
         GameIsPause = true;
-        FindObjectOfType<AudioManager>().Stop("Ticking");
+        //FindObjectOfType<AudioManager>().Stop("Ticking");
     }
 
     //Schließen der Hilfe
@@ -58,7 +58,7 @@ public class PauseMenu : MonoBehaviour {
         helpMenuUI.SetActive(false);
         Time.timeScale = 1.0f;
         GameIsPause = false;
-        FindObjectOfType<AudioManager>().Play("Ticking");
+        //FindObjectOfType<AudioManager>().Play("Ticking");
     }
 
     //Funktion für den Pause Icon der Mobilen Version
@@ -77,16 +77,16 @@ public class PauseMenu : MonoBehaviour {
     //Neustart des Levels
     public void Restart()
     {
-        FindObjectOfType<AudioManager>().Stop("Ticking");
-        FindObjectOfType<AudioManager>().Stop("Ring");
+        //FindObjectOfType<AudioManager>().Stop("Ticking");
+        //FindObjectOfType<AudioManager>().Stop("Ring");
         Time.timeScale = 1.0f;
-        SceneManager.LoadScene("level1");
+        SceneManager.LoadScene("Cuboid");
     }
 
     //Laden der Levelauswahl
     public void LoadLevelMenue()
     {
-        FindObjectOfType<AudioManager>().Stop("Ring");
+        //FindObjectOfType<AudioManager>().Stop("Ring");
         GameIsPause = false;
         Time.timeScale = 1.0f;
         SceneManager.LoadScene("LevelMenu");
@@ -95,7 +95,7 @@ public class PauseMenu : MonoBehaviour {
     //Level beenden, Rückkehr in den Startbildschirm
     public void QuitGame()
     {
-        FindObjectOfType<AudioManager>().Stop("Ring");
+        //FindObjectOfType<AudioManager>().Stop("Ring");
         GameIsPause = false;
         Time.timeScale = 1.0f;
         SceneManager.LoadScene("Menu");
