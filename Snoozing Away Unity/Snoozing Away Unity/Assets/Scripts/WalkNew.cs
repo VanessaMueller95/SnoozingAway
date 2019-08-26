@@ -19,6 +19,10 @@ public class WalkNew : MonoBehaviour
 
     RaycastHit hitDown; RaycastHit hitFloor; RaycastHit hitWall;
 
+    private float walkingSpeed = 2;
+
+    public string lastRotation = null;
+
 
 
     // Start is called before the first frame update
@@ -52,7 +56,7 @@ public class WalkNew : MonoBehaviour
     void Update()
     {
         
-        transform.Translate(Vector3.forward * Time.deltaTime);
+        transform.Translate(Vector3.forward * Time.deltaTime*walkingSpeed);
 
         //Raycast Debug
         Debug.DrawRay(transform.position + transform.up, (Quaternion.AngleAxis(-85, transform.right) * (transform.transform.forward * -1))*5, Color.yellow);
@@ -60,16 +64,16 @@ public class WalkNew : MonoBehaviour
 
         if (Physics.Raycast(transform.position + transform.up, transform.TransformDirection(Vector3.down) * 1f, out hitFloor, Mathf.Infinity))
         {
-            Vector3 distance = hitFloor.point + transform.up * 0.2f;
+            Vector3 distance = hitFloor.point + transform.up * 0.1f;
             //Debug.Log("Boden getroffen, Abstand: " + hitDown.distance);
             //Debug.Log("Walking on: " + hitFloor.collider.gameObject.tag);
             //Berechnung des Abstandes vom Boden
 
-            Debug.Log("Walking on: " + hitFloor.collider.gameObject.GetComponent<Cube>().code);
-            Debug.Log("0: Boden; 1: Wasser; 2: Eule; 3: Raben; 4:Treppe");
+            //Debug.Log("Walking on: " + hitFloor.collider.gameObject.GetComponent<Cube>().code);
+            //Debug.Log("0: Boden; 1: Wasser; 2: Eule; 3: Raben; 4:Treppe");
             if (hitDown.distance < 2)
             {
-                    transform.position = Vector3.Lerp(transform.position, distance, Time.deltaTime * 4);
+                    transform.position = Vector3.Lerp(transform.position, distance, Time.deltaTime * (walkingSpeed * 4));
             }
         }
         
@@ -84,7 +88,7 @@ public class WalkNew : MonoBehaviour
                 //Rotation von Snoozer in Richtung der Normalen der Wand
                 Quaternion newRotation = Quaternion.FromToRotation(transform.up, hitWall.normal) * transform.rotation;
                 //Animation der Position von Snoozer
-                transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * (float)2.5);
+                transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * (walkingSpeed*4));
             }
         }
         
@@ -97,7 +101,7 @@ public class WalkNew : MonoBehaviour
             {
                 Quaternion newRotation = transform.rotation;
                 newRotation = Quaternion.FromToRotation(transform.up, hitDown.normal) * transform.rotation;
-                transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * (float)2.5);
+                transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * (float)8);
             }
         }
         

@@ -25,6 +25,8 @@ public class Snoozer : MonoBehaviour
     public Animator animator;
     public AudioManager audiomanager;
 
+
+
     private void Start()
     {
         audiomanager = FindObjectOfType<AudioManager>();
