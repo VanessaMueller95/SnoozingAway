@@ -55,7 +55,9 @@ public class WalkNew : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //Debug.Log(transform.forward);
+
+
         transform.Translate(Vector3.forward * Time.deltaTime*walkingSpeed);
 
         //Raycast Debug

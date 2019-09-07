@@ -40,6 +40,7 @@ public class Snoozer : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(transform.forward);
         //Snoozer läuft gerade au, wenn er nicht Binkt
         if (blinkEnd == true)
         {

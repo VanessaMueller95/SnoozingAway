@@ -89,18 +89,31 @@ public class Cuboid : MonoBehaviour
     {
         // get the target position
         var target = cameraPoints[currentCameraPos];
+        var target2 = cameraPoints[0];
+
 
         // transform update only if we haven't reached the point
         var delta = Camera.main.transform.position - target;
-
+        
         // never compare on 0 with FP ;) - remember PROG1 
         // this should be Mathf.Epsilon: thanks Unity for breaking this convention
-        if (delta.sqrMagnitude > 0.1F) { 
- 
+        if (delta.sqrMagnitude > 0.1F) {
+
             // can make the 'whoopiness' adjustable with last parameter of slerp
             Camera.main.transform.position = Vector3.Slerp(Camera.main.transform.position,target,0.4f);
-            Camera.main.transform.LookAt(Vector3.zero,Vector3.up);
-    
+            if (currentCameraPos == 4)
+            {
+                Camera.main.transform.LookAt(Vector3.zero, Vector3.forward);
+            }
+            else if (currentCameraPos == 5)
+            {
+                Camera.main.transform.LookAt(Vector3.zero, Vector3.back);
+            }
+            else
+            {
+                Camera.main.transform.LookAt(Vector3.zero, Vector3.up);
+            }
+
         }
 
         // this should go into some update cursor method ...

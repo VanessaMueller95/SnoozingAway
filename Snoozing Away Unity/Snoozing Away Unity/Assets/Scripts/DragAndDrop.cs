@@ -48,6 +48,22 @@ public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
             {
                 startRot = Quaternion.LookRotation(normal) * Quaternion.Euler(90, -180, 0);
             }
+            if (normal == new Vector3(0, 0, -1))
+            {
+                startRot = Quaternion.LookRotation(-normal) * Quaternion.Euler(-90, 180, 0);
+            }
+            if (normal == new Vector3(0, 0, 1))
+            {
+                startRot = Quaternion.LookRotation(normal) * Quaternion.Euler(-90, 0, 0);
+            }
+            if (normal == new Vector3(1, 0, 0))
+            {
+                startRot = Quaternion.LookRotation(-normal) * Quaternion.Euler(-90, 180, 0);
+            }
+            if (normal == new Vector3(-1, 0, 0))
+            {
+                startRot = Quaternion.LookRotation(-normal) * Quaternion.Euler(-90, -180, 0);
+            }
             Debug.Log("Rotation: " + startRot);
             Instantiate(prefabPlacementObject, placentPosition, startRot);
 

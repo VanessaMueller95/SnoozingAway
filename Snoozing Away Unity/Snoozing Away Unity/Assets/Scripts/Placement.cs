@@ -21,18 +21,38 @@ public class Placement : MonoBehaviour
         {
             Vector3 placentPosition = hitObject.transform.position + normal;
 
+            var startRot = Quaternion.LookRotation(normal) * Quaternion.Euler(0, 0, 0);
+
             if (Input.GetMouseButtonDown(0) && mouseClick == false)
             {
+                Debug.Log("Testi");
                 mouseClick = true;
-                var startRot = Quaternion.LookRotation(normal) * Quaternion.Euler(90, 0, 0);
                 if(normal== new Vector3(0, -1, 0))
                 {
-                    startRot = Quaternion.LookRotation(normal) * Quaternion.Euler(90, 180, 0);
+                    Debug.Log("TEEEEEEEEEEEEEEEEEEEEEST");
+                    startRot = Quaternion.LookRotation(-normal) * Quaternion.Euler(90, 180, 0);
                 }
                 if (normal == new Vector3(0, 1, 0))
                 {
-                    startRot = Quaternion.LookRotation(normal) * Quaternion.Euler(90, -180, 0);
+                    Debug.Log("TEEEEEEEEEEEEEEEEEEEEEST");
+                    startRot = Quaternion.LookRotation(-normal) * Quaternion.Euler(90, -180, 0);
                 }
+                if (normal == new Vector3(0, 0, -1))
+                {
+                    Debug.Log("TEEEEEEEEEEEEEEEEEEEEEST");
+                    startRot = Quaternion.LookRotation(-normal) * Quaternion.Euler(-90, 0, 0);
+                }
+                if (normal == new Vector3(0, 0, 1))
+                {
+                    Debug.Log("TEEEEEEEEEEEEEEEEEEEEEST");
+                    startRot = Quaternion.LookRotation(-normal) * Quaternion.Euler(90, 0, 0);
+                }
+                if (normal == new Vector3(1, 0, 0))
+                {
+                    Debug.Log("TEEEEEEEEEEEEEEEEEEEEEST");
+                    startRot = Quaternion.LookRotation(-normal) * Quaternion.Euler(90, 180, 0);
+                }
+
                 Debug.Log("Rotation: " + startRot);
                 Instantiate(prefabPlacementObject, placentPosition, startRot);
                 
@@ -54,12 +74,12 @@ public class Placement : MonoBehaviour
             if (hitInfo.collider.gameObject.GetComponent<Cube>().code == 0)
             {
                 point = hitInfo.point;
-                Debug.Log("Punkt: " + point);
+                //Debug.Log("Punkt: " + point);
                 hitObject = hitInfo.collider.gameObject;
-                Debug.Log("GameObject: " + hitObject);
-                Debug.Log("Tag: " + hitObject.tag);
+                //Debug.Log("GameObject: " + hitObject);
+                //Debug.Log("Tag: " + hitObject.tag);
                 normal = hitInfo.normal;
-                Debug.Log("Normal: " + normal);
+                //Debug.Log("Normal: " + normal);
                 return true;
             }
         }
