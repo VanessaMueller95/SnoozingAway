@@ -113,6 +113,7 @@ public class Cuboid : MonoBehaviour
             {
                 Camera.main.transform.LookAt(Vector3.zero, Vector3.up);
             }
+            
 
         }
 

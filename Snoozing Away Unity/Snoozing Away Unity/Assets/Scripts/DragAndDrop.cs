@@ -39,6 +39,17 @@ public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         {
             Vector3 placentPosition = hitObject.transform.position + normal;
 
+            //testet ob bereits ein Interaktionsfeld vorhanden ist und zerstört es falls ja
+            Collider[] hitColliders = Physics.OverlapSphere(placentPosition, (float)0.5);
+            for (int i = 0; i < hitColliders.Length; i++)
+            {
+                Debug.Log(hitColliders[i].gameObject);
+                if(hitColliders[i].gameObject.tag == "Interact")
+                {
+                    Destroy(hitColliders[i].gameObject);
+                }
+            }
+            
             var startRot = Quaternion.LookRotation(normal) * Quaternion.Euler(90, 0, 0);
             if (normal == new Vector3(0, -1, 0))
             {
@@ -66,6 +77,9 @@ public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
             }
             Debug.Log("Rotation: " + startRot);
             Instantiate(prefabPlacementObject, placentPosition, startRot);
+            
+
+           
 
         }
     }

@@ -11,6 +11,7 @@ TagManager:
   - rabe
   - floor
   - stairs
+  - turnAround
   layers:
   - Default
   - TransparentFX

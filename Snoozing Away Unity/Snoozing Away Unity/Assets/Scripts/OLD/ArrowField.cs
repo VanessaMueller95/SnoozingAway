@@ -18,7 +18,7 @@ public class ArrowField : MonoBehaviour {
     //Test auf Collision zwischen den Pfeilfelder und dem Character
     //Getestet wird ob der Mittelpunkt des Characters im Collider enthalten ist, um den Character immer am ca. gleichen Punkt zu drehen, egal aus welcher Richtung er kommt
     void Update () {
-        Debug.Log("PFEILFELD NORMALE:" + transform.up);
+        //Debug.Log("PFEILFELD NORMALE:" + transform.up);
         //Character Mittelpunkt im Collider des Feldes?
         if (transform.GetComponent<Collider>().bounds.Contains(chara.transform.position))
         {

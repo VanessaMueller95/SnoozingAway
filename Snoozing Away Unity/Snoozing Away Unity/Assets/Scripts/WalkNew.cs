@@ -82,15 +82,19 @@ public class WalkNew : MonoBehaviour
         if (Physics.Raycast(transform.position + transform.up, transform.TransformDirection(Vector3.forward) * 1f, out hitWall, 1))
         {
             //Debug.Log("Tag Wand vorne : " + hitWall.collider.gameObject.tag);
-            Debug.Log("Tag Wand vorne : " + hitWall.collider.gameObject.GetComponent<Cube>().code);
+            //Debug.Log("Tag Wand vorne : " + hitWall.collider.gameObject.GetComponent<Cube>().code);
             //Test auf Entfernung zur Wand
-            if (hitWall.collider.gameObject.tag != "stairs" && hitWall.distance < 1.5)
+            if (hitWall.collider.gameObject.tag != "stairs" && hitWall.collider.gameObject.tag != "turnAround" && hitWall.distance < 1.5)
             {
                 //Debug.Log("Tag Wand vorne, in Methode : " + hitWall.collider.gameObject.tag);
                 //Rotation von Snoozer in Richtung der Normalen der Wand
                 Quaternion newRotation = Quaternion.FromToRotation(transform.up, hitWall.normal) * transform.rotation;
                 //Animation der Position von Snoozer
                 transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * (walkingSpeed*4));
+            }
+            else if (hitWall.collider.gameObject.tag == "turnAround" && hitWall.distance < 0.3)
+            {
+                transform.rotation = Quaternion.LookRotation(hitWall.normal, transform.up);
             }
         }
         
@@ -99,7 +103,7 @@ public class WalkNew : MonoBehaviour
         if (Physics.Raycast(transform.position, (Quaternion.AngleAxis(-82, transform.right) * (transform.transform.forward * -1)) * 10f, out hitDown, Mathf.Infinity))
         {
             //Test ob Bodennormale Charakter Normalen entspricht
-            if (hitDown.collider.gameObject.tag != "stairs" && transform.up != hitDown.normal)
+            if ( transform.up != hitDown.normal)
             {
                 Quaternion newRotation = transform.rotation;
                 newRotation = Quaternion.FromToRotation(transform.up, hitDown.normal) * transform.rotation;
