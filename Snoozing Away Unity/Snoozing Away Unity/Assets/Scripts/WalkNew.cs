@@ -55,7 +55,7 @@ public class WalkNew : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(transform.forward);
+        //Debug.Log(transform.up);
 
 
         transform.Translate(Vector3.forward * Time.deltaTime*walkingSpeed);
@@ -75,15 +75,12 @@ public class WalkNew : MonoBehaviour
             //Debug.Log("0: Boden; 1: Wasser; 2: Eule; 3: Raben; 4:Treppe");
             if (hitDown.distance < 2)
             {
-                    transform.position = Vector3.Lerp(transform.position, distance, Time.deltaTime * (walkingSpeed * 4));
+                transform.position = Vector3.Lerp(transform.position, distance, Time.deltaTime * (walkingSpeed * 4));
             }
         }
         
         if (Physics.Raycast(transform.position + transform.up, transform.TransformDirection(Vector3.forward) * 1f, out hitWall, 1))
         {
-            //Debug.Log("Tag Wand vorne : " + hitWall.collider.gameObject.tag);
-            //Debug.Log("Tag Wand vorne : " + hitWall.collider.gameObject.GetComponent<Cube>().code);
-            //Test auf Entfernung zur Wand
             if (hitWall.collider.gameObject.tag != "stairs" && hitWall.collider.gameObject.tag != "turnAround" && hitWall.distance < 1.5)
             {
                 //Debug.Log("Tag Wand vorne, in Methode : " + hitWall.collider.gameObject.tag);
@@ -94,7 +91,27 @@ public class WalkNew : MonoBehaviour
             }
             else if (hitWall.collider.gameObject.tag == "turnAround" && hitWall.distance < 0.3)
             {
-                transform.rotation = Quaternion.LookRotation(hitWall.normal, transform.up);
+                Debug.Log(transform.up);
+                Debug.Log(transform);
+                if (V3Equal(transform.up, Vector3.back))
+                {
+                    Debug.Log("TEST");
+                    transform.position = transform.position + (transform.forward * (float)2 + (-transform.right * (float)2));
+                }
+                else if (V3Equal(transform.up, Vector3.forward))
+                {
+                    transform.position = transform.position + (transform.forward * (float)2 + (transform.right * (float)2));
+                }
+                else if (V3Equal(transform.up, Vector3.left))
+                {
+                    transform.position = transform.position + (transform.forward * (float)2 + (transform.right * (float)2));
+
+                }
+                else if (V3Equal(transform.up, Vector3.right))
+                {
+                    transform.position = transform.position + (transform.forward * (float)2 + (-transform.right * (float)2));
+                }
+                //transform.rotation = Quaternion.LookRotation(hitWall.normal, transform.up);
             }
         }
         
@@ -132,5 +149,10 @@ public class WalkNew : MonoBehaviour
                 return; // stop here
             }
         }
+    }
+
+    public bool V3Equal(Vector3 a, Vector3 b)
+    {
+        return Vector3.SqrMagnitude(a - b) < 0.0001;
     }
 }

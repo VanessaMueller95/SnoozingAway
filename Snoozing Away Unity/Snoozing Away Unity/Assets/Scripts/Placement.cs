@@ -2,6 +2,8 @@
 
 public class Placement : MonoBehaviour
 {
+
+    //TODO PLACEMENT SKRIPT SOLLTE TREPPEN COLLIDER IGNORIEREN
     public GameObject prefabPlacementObject;
     public GameObject dragObject;
 
