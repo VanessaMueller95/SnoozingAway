@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3271961205488885112}
   - component: {fileID: 1186852020886420624}
   - component: {fileID: 2224547946928414188}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube
   m_TagString: turnAround
   m_Icon: {fileID: 0}
@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 1798332773743563972}
   - component: {fileID: 8163045536553436753}
   - component: {fileID: 2490060355924048787}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: stairsTest
   m_TagString: stairs
   m_Icon: {fileID: 0}
@@ -214,7 +214,7 @@ GameObject:
   - component: {fileID: 828161141388239996}
   - component: {fileID: 2237574612924168925}
   - component: {fileID: 2558940342058526502}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube (1)
   m_TagString: turnAround
   m_Icon: {fileID: 0}
@@ -303,6 +303,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: c27eafa4cd3af434283ac267e0d749f1, type: 3}
       propertyPath: m_Name
       value: stairs-mesh
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: c27eafa4cd3af434283ac267e0d749f1, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c27eafa4cd3af434283ac267e0d749f1, type: 3}
       propertyPath: m_LocalPosition.x

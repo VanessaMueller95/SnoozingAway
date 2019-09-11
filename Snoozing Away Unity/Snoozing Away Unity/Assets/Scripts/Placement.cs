@@ -14,7 +14,10 @@ public class Placement : MonoBehaviour
     private GameObject instancedItem;
     private GameObject parent;
     Vector3 startPosition;
-    
+
+    public LayerMask mask;
+
+
     void Update()
     {
         Vector3 point;
@@ -71,7 +74,7 @@ public class Placement : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         RaycastHit hitInfo = new RaycastHit();
-        if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity))
+        if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity, mask))
         {
             if (hitInfo.collider.gameObject.GetComponent<Cube>().code == 0)
             {

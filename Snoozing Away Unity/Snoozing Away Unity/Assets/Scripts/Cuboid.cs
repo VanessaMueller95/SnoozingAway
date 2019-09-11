@@ -290,7 +290,7 @@ public class Cuboid : MonoBehaviour
 
     void Save()
     {
-        string dataPath = Application.streamingAssetsPath + cellDataFile;
+        string dataPath = "Assets/level" + cellDataFile;
 
         FileStream file;
 
@@ -305,7 +305,7 @@ public class Cuboid : MonoBehaviour
     bool Read()
     {
 
-        string dataPath = Application.streamingAssetsPath + cellDataFile;
+        string dataPath = "Assets/level" + cellDataFile;
         Debug.Log(dataPath);
 
         FileStream file;

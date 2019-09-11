@@ -1888,6 +1888,9 @@ MonoBehaviour:
   prefabPlacementObject: {fileID: 1264298172444862, guid: f782527cf21ac214dae875b9e524b9cb,
     type: 3}
   dragObject: {fileID: 1142437771}
+  mask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!4 &864349730
 Transform:
   m_ObjectHideFlags: 0
@@ -2551,6 +2554,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabPlacementObject: {fileID: 1946409328209470, guid: 9e21e8e0b051839449d59574ab65651f,
     type: 3}
+  mask:
+    serializedVersion: 2
+    m_Bits: 823
 --- !u!1 &1143460599
 GameObject:
   m_ObjectHideFlags: 0
@@ -2982,6 +2988,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabPlacementObject: {fileID: 1405804417565074, guid: d2d526f3824bcb04ea0fc023439195a6,
     type: 3}
+  mask:
+    serializedVersion: 2
+    m_Bits: 823
 --- !u!1 &1217273821
 GameObject:
   m_ObjectHideFlags: 0
@@ -4274,6 +4283,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabPlacementObject: {fileID: 1264298172444862, guid: f782527cf21ac214dae875b9e524b9cb,
     type: 3}
+  mask:
+    serializedVersion: 2
+    m_Bits: 823
 --- !u!1 &1762148376
 GameObject:
   m_ObjectHideFlags: 0
@@ -4418,6 +4430,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabPlacementObject: {fileID: 1299333829805074, guid: dd8eac19d29dc1a42a61ce5520b107d0,
     type: 3}
+  mask:
+    serializedVersion: 2
+    m_Bits: 823
 --- !u!1 &1826569150
 GameObject:
   m_ObjectHideFlags: 0
@@ -4637,6 +4652,7 @@ GameObject:
   - component: {fileID: 1858488999}
   - component: {fileID: 1858488998}
   - component: {fileID: 1858488997}
+  - component: {fileID: 1858489000}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -4708,6 +4724,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1858489000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1858488996}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6bd9281c4e934742ba55da8c36d3fe6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1868408360
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,6 +15,9 @@ public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     private GameObject parent;
     Vector3 startPosition;
 
+    public LayerMask mask;
+
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         Debug.Log("DRAG AKTIV");
@@ -89,7 +92,7 @@ public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         RaycastHit hitInfo = new RaycastHit();
-        if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity))
+        if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity, mask))
         {
             if (hitInfo.collider.gameObject.GetComponent<Cube>().code == 0)
             {
