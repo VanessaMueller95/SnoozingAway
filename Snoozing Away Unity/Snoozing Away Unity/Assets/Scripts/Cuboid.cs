@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using UnityEngine.Networking;
 
 
 /*
@@ -43,7 +44,7 @@ public class Cuboid : MonoBehaviour
     private Cursor EditorCursor = new Cursor();
 
     // store cell data - temporary storage also for editor
-    private string cellDataFile = "/level1.dat";
+    private string cellDataFile = "level1.dat";
 
     private Vector3 [] cameraPoints;
     private int currentCameraPos = 1;
@@ -51,9 +52,14 @@ public class Cuboid : MonoBehaviour
     [HideInInspector]
     public bool levelLoaded = false;
 
+    private IEnumerator coroutine;
+
     // Start is called before the first frame update
-    void Start()
+    IEnumerator Start()
     {
+        coroutine = DownloadFile();
+        yield return StartCoroutine(coroutine);
+
         Debug.Log(Application.persistentDataPath);
 
         // create cells - welcome to Unity vectors having no trace
@@ -138,7 +144,7 @@ public class Cuboid : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.G))
         {
             Randomize();
-            UpdateVisuals();
+            //UpdateVisuals();
         } else if (Input.GetKeyUp(KeyCode.C)) {
             // toggle cursor
             EditorCursor.enabled = !EditorCursor.enabled;
@@ -222,7 +228,7 @@ public class Cuboid : MonoBehaviour
         }
     }
 
-    void Randomize()
+    public void Randomize()
     {
         // just for debugging
         foreach(Cell c in cells)
@@ -230,6 +236,7 @@ public class Cuboid : MonoBehaviour
             c.code = Random.Range(0, cellObjects.Length);
             c.enabled = true;
         }
+        UpdateVisuals();
     }
 
     //Methode, um das Objekt zu wechseln, das plaziert wird
@@ -290,7 +297,7 @@ public class Cuboid : MonoBehaviour
 
     void Save()
     {
-        string dataPath = "Assets/level" + cellDataFile;
+        string dataPath = Path.Combine(Application.streamingAssetsPath, cellDataFile);
 
         FileStream file;
 
@@ -301,11 +308,22 @@ public class Cuboid : MonoBehaviour
 
         file.Close();
     }
+    static IEnumerator DownloadFile()
+    {
+        Debug.Log("TEEEEEEEEEEEEEEEEEST");
+        UnityWebRequest uwr;
+        uwr = new UnityWebRequest(Path.Combine(Application.streamingAssetsPath, "level1.dat"));
+        uwr.downloadHandler = new DownloadHandlerFile(Path.Combine(Application.persistentDataPath, "level1.dat"));
+        yield return uwr.SendWebRequest();
+        Debug.Log(Path.Combine(Application.streamingAssetsPath, "level1.dat") + " File successfully downloaded and saved to " + Path.Combine(Application.persistentDataPath, "level1.dat"));
+        
+    }
+
 
     bool Read()
     {
 
-        string dataPath = "Assets/level" + cellDataFile;
+        string dataPath = Path.Combine(Application.persistentDataPath, "level1.dat");
         Debug.Log(dataPath);
 
         FileStream file;
@@ -321,6 +339,8 @@ public class Cuboid : MonoBehaviour
         }
 
         BinaryFormatter bf = new BinaryFormatter();
+
+   
 
         cells = (Cell[])bf.Deserialize(file);
 
