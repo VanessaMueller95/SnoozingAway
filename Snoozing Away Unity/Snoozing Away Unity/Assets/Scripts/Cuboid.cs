@@ -46,9 +46,6 @@ public class Cuboid : MonoBehaviour
     // store cell data - temporary storage also for editor
     private string cellDataFile = "level1.dat";
 
-    private Vector3 [] cameraPoints;
-    private int currentCameraPos = 1;
-
     [HideInInspector]
     public bool levelLoaded = false;
 
@@ -70,20 +67,6 @@ public class Cuboid : MonoBehaviour
             cells[i] = new Cell();
         }
 
-        var zoom  = 1.4f;
-
-        var camDist = new Vector3(dimensions.x * cellSize * zoom,
-            dimensions.x * cellSize * zoom,
-            dimensions.x * cellSize * zoom);
-
-        cameraPoints = new Vector3[6];
-        cameraPoints[0] = Vector3.Scale(Vector3.forward,camDist);
-        cameraPoints[1] = Vector3.Scale(Vector3.back,camDist);
-        cameraPoints[2] = Vector3.Scale(Vector3.left,camDist);
-        cameraPoints[3] = Vector3.Scale(Vector3.right,camDist);
-        cameraPoints[4] = Vector3.Scale(Vector3.up,camDist);
-        cameraPoints[5] = Vector3.Scale(Vector3.down,camDist);
-
         Read();
 
         UpdateVisuals();
@@ -93,35 +76,6 @@ public class Cuboid : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // get the target position
-        var target = cameraPoints[currentCameraPos];
-        var target2 = cameraPoints[0];
-
-
-        // transform update only if we haven't reached the point
-        var delta = Camera.main.transform.position - target;
-        
-        // never compare on 0 with FP ;) - remember PROG1 
-        // this should be Mathf.Epsilon: thanks Unity for breaking this convention
-        if (delta.sqrMagnitude > 0.1F) {
-
-            // can make the 'whoopiness' adjustable with last parameter of slerp
-            Camera.main.transform.position = Vector3.Slerp(Camera.main.transform.position,target,0.4f);
-            if (currentCameraPos == 4)
-            {
-                Camera.main.transform.LookAt(Vector3.zero, Vector3.forward);
-            }
-            else if (currentCameraPos == 5)
-            {
-                Camera.main.transform.LookAt(Vector3.zero, Vector3.back);
-            }
-            else
-            {
-                Camera.main.transform.LookAt(Vector3.zero, Vector3.up);
-            }
-            
-
-        }
 
         // this should go into some update cursor method ...
         var updatedCursorPos = EditorCursor.pos;
@@ -159,20 +113,6 @@ public class Cuboid : MonoBehaviour
         {
             Read();
             UpdateVisuals();
-        }
-        /* view points */
-        else if (Input.GetKeyDown(KeyCode.Alpha0)) {
-            currentCameraPos = 0;
-        } else if (Input.GetKeyDown(KeyCode.Alpha1)) {
-            currentCameraPos = 1;
-        } else if (Input.GetKeyDown(KeyCode.Alpha2)) {
-            currentCameraPos = 2;
-        } else if (Input.GetKeyDown(KeyCode.Alpha3)) {
-            currentCameraPos = 3;
-        } else if (Input.GetKeyDown(KeyCode.Alpha4)) {
-            currentCameraPos = 4;
-        } else if (Input.GetKeyDown(KeyCode.Alpha5)) {
-            currentCameraPos = 5;
         }
         /* minimal editor */
         else if (Input.GetKeyDown(KeyCode.UpArrow))

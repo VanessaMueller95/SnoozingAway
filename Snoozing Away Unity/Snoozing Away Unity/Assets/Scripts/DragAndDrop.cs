@@ -20,6 +20,8 @@ public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        GameObject.Find("MainCamera").GetComponent<camera>().enabled = false;
+
         Debug.Log("DRAG AKTIV");
         parent = GameObject.Find("UI");
         startPosition = gameObject.transform.position;
@@ -34,7 +36,11 @@ public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     public void OnEndDrag(PointerEventData eventData)
     {
+
         Destroy(instancedItem);
+
+        GameObject.Find("MainCamera").GetComponent<camera>().enabled = true;
+
 
         Vector3 point;
 
@@ -80,10 +86,6 @@ public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
             }
             Debug.Log("Rotation: " + startRot);
             Instantiate(prefabPlacementObject, placentPosition, startRot);
-            
-
-           
-
         }
     }
 

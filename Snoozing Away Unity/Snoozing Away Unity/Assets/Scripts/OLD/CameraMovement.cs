@@ -18,6 +18,7 @@ public class CameraMovement : MonoBehaviour
     private Vector3 lp;   //Touch Endposition
     private float dragDistance;  //minimale Laenge um Swipe auszulösen
 
+
     //Beim Start des Spiels ist die Perspektive "Front"
     void Start()
     {
