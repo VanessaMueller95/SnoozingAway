@@ -237,7 +237,7 @@ public class Cuboid : MonoBehaviour
 
     void Save()
     {
-        string dataPath = Path.Combine(Application.streamingAssetsPath, cellDataFile);
+        string dataPath = Path.Combine(Application.streamingAssetsPath, "level1.dat");
 
         FileStream file;
 

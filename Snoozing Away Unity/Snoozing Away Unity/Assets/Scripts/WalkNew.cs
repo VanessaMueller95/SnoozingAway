@@ -23,6 +23,7 @@ public class WalkNew : MonoBehaviour
 
     public string lastRotation = null;
 
+    public LayerMask mask;
 
 
     // Start is called before the first frame update
@@ -64,7 +65,7 @@ public class WalkNew : MonoBehaviour
         Debug.DrawRay(transform.position + transform.up, (Quaternion.AngleAxis(-85, transform.right) * (transform.transform.forward * -1))*5, Color.yellow);
         Debug.DrawRay(transform.position + transform.up, transform.TransformDirection(Vector3.forward) * 10f, Color.blue);
 
-        if (Physics.Raycast(transform.position + transform.up, transform.TransformDirection(Vector3.down) * 1f, out hitFloor, Mathf.Infinity))
+        if (Physics.Raycast(transform.position + transform.up, transform.TransformDirection(Vector3.down) * 1f, out hitFloor, Mathf.Infinity, mask))
         {
             Vector3 distance = hitFloor.point + transform.up * 0.1f;
             //Debug.Log("Boden getroffen, Abstand: " + hitDown.distance);
@@ -79,7 +80,7 @@ public class WalkNew : MonoBehaviour
             }
         }
         
-        if (Physics.Raycast(transform.position + transform.up, transform.TransformDirection(Vector3.forward) * 1f, out hitWall, 1))
+        if (Physics.Raycast(transform.position + transform.up, transform.TransformDirection(Vector3.forward) * 1f, out hitWall, 1, mask))
         {
             if (hitWall.collider.gameObject.tag != "stairs" && hitWall.collider.gameObject.tag != "turnAround" && hitWall.distance < 1.5)
             {
@@ -117,7 +118,7 @@ public class WalkNew : MonoBehaviour
         
         
         //Raycast nach unten um zu Testen ob es einen Boden gibt und Positionierung an Boden-Normale
-        if (Physics.Raycast(transform.position, (Quaternion.AngleAxis(-82, transform.right) * (transform.transform.forward * -1)) * 10f, out hitDown, Mathf.Infinity))
+        if (Physics.Raycast(transform.position, (Quaternion.AngleAxis(-82, transform.right) * (transform.transform.forward * -1)) * 10f, out hitDown, Mathf.Infinity, mask))
         {
             //Test ob Bodennormale Charakter Normalen entspricht
             if ( transform.up != hitDown.normal)
