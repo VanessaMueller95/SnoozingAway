@@ -150,10 +150,10 @@ public class Snoozer : MonoBehaviour
         //Schaltet die Renderer regelmäßig an und aus -> Blinken
         while (Time.time < endTime)
         {
-            Debug.Log("Aktiv");
+            //Debug.Log("Aktiv");
             foreach (Renderer r in rs) { r.enabled = false; }
             yield return new WaitForSeconds(0.2f);
-            Debug.Log("Aktiv");
+            //Debug.Log("Aktiv");
             foreach (Renderer r in rs) { r.enabled = true; }
             yield return new WaitForSeconds(0.2f);
         }

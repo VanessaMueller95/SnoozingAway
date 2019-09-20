@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 1798332773743563972}
   - component: {fileID: 8163045536553436753}
   - component: {fileID: 2490060355924048787}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: stairsTest
   m_TagString: stairs
   m_Icon: {fileID: 0}
@@ -306,7 +306,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: c27eafa4cd3af434283ac267e0d749f1, type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c27eafa4cd3af434283ac267e0d749f1, type: 3}
       propertyPath: m_LocalPosition.x

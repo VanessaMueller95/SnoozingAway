@@ -32,12 +32,16 @@ public class WalkNew : MonoBehaviour
     public GameObject wonMenuUI;
     public Quaternion spreadAngle;
 
+    public GameObject clock;
+    private int clockPosition;
+
 
     // Start is called before the first frame update
     void Start()
     {
         cuboid = FindObjectOfType<Cuboid>();
         animator = transform.Find("Snoozer-Walking").GetComponent<Animator>();
+        clock = GameObject.Find("alarmclock");
 
         StartCoroutine(StartLevel());
     }
@@ -47,11 +51,15 @@ public class WalkNew : MonoBehaviour
         yield return new WaitUntil(() => cuboid.levelLoaded = true);
 
         Reset();
+        SetClock();
         Vector3 sideVector = sideDirections[currentSide];
 
         // initial position from this point out we should cast the rays 
         Vector3 worldPos = (Vector3)Cuboid.GetPosition(currentPos, cuboid.Dimensions) * cuboid.cellSize - cuboid.CenterPoint;
         gameObject.transform.localPosition = worldPos + sideVector * cuboid.cellSize;
+
+        Vector3 worldPosClock = (Vector3)Cuboid.GetPosition(clockPosition, cuboid.Dimensions) * cuboid.cellSize - cuboid.CenterPoint;
+        clock.transform.localPosition = worldPosClock + Vector3.up * cuboid.cellSize;
 
         StartCoroutine(Blink(3, "start"));
 
@@ -94,7 +102,7 @@ public class WalkNew : MonoBehaviour
         
         if (Physics.Raycast(transform.position + transform.up, transform.TransformDirection(Vector3.forward) * 1f, out hitWall, 1, mask))
         {
-            if (hitWall.collider.gameObject.tag != "stairs" && hitWall.collider.gameObject.tag != "turnAround" && hitWall.distance < 1.5)
+            if (hitWall.collider.gameObject.tag != "turnAround" && hitWall.distance < 1.5)
             {
                 //Debug.Log("Tag Wand vorne, in Methode : " + hitWall.collider.gameObject.tag);
                 //Rotation von Snoozer in Richtung der Normalen der Wand
@@ -124,7 +132,6 @@ public class WalkNew : MonoBehaviour
                 {
                     transform.position = transform.position + (transform.forward * (float)2 + (-transform.right * (float)2));
                 }
-                //transform.rotation = Quaternion.LookRotation(hitWall.normal, transform.up);
             }
         }
         
@@ -137,7 +144,7 @@ public class WalkNew : MonoBehaviour
             {
                 Quaternion newRotation = transform.rotation;
                 newRotation = Quaternion.FromToRotation(transform.up, hitDown.normal) * transform.rotation;
-                transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * (float)8);
+                transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * (float)12);
             }
         }
         
@@ -149,17 +156,29 @@ public class WalkNew : MonoBehaviour
 
         for (var i = 0; i < cuboid.CellCount; i++)
         {
-            // the snoozer can be only attached to enabled cells 
-            // needs to be revised ...
-            if (cuboid.Cells[i].enabled == true)
+            if (cuboid.Cells[i].code == 6)
             {
                 Debug.Log("found cell:" + i);
 
-                // need to check walkable or not 
-
                 currentPos = i;
 
-                return; // stop here
+                return; 
+            }
+        }
+    }
+
+    public void SetClock()
+    {
+
+        for (var i = 0; i < cuboid.CellCount; i++)
+        {
+            if (cuboid.Cells[i].code == 7)
+            {
+                Debug.Log("found cell:" + i);
+
+                clockPosition = i;
+
+                return;
             }
         }
     }
@@ -171,6 +190,7 @@ public class WalkNew : MonoBehaviour
 
     IEnumerator Blink(float waitTime, string state)
     {
+        Debug.Log("STATE: " + state);
         //Berechnung der Endzeit
         var endTime = Time.time + waitTime;
 
@@ -180,10 +200,10 @@ public class WalkNew : MonoBehaviour
         //Schaltet die Renderer regelmäßig an und aus -> Blinken
         while (Time.time < endTime)
         {
-            Debug.Log("Aktiv");
+            //Debug.Log("Aktiv");
             foreach (Renderer r in rs) { r.enabled = false; }
             yield return new WaitForSeconds(0.2f);
-            Debug.Log("Aktiv");
+            //Debug.Log("Aktiv");
             foreach (Renderer r in rs) { r.enabled = true; }
             yield return new WaitForSeconds(0.2f);
         }
@@ -193,11 +213,11 @@ public class WalkNew : MonoBehaviour
 
         //Anhängig von dem Grund für das Blinken werden Folgeaktionen ausgeführt am Ende:
         //Bei Start wird das Ticken aktiviert und der Timer gestartet
-        /*if (state == "start")
+        if (state == "start")
         {
-            GameObject.Find("TimerCanvas").GetComponent<Timer>().timerActive = true;
-            audiomanager.Play("Ticking");
-        }*/
+            //GameObject.Find("TimerCanvas").GetComponent<Timer>().timerActive = true;
+            //audiomanager.Play("Ticking");
+        }
 
         //Bei Wasser wird das Restart Menü aufgerufen, die Zeit angehalten und das Ticken beendet
         if (state == "water")
@@ -206,13 +226,77 @@ public class WalkNew : MonoBehaviour
             Time.timeScale = 0f;
             //audiomanager.Stop("Ticking");
         }
-        /*
-        //Im Ziel wird das Gewonnen Menü aufgerufen, die Zeit angehalten und das Ticken beendet
-        if (state == "ziel")
-        {
-            wonMenuUI.SetActive(true);
-            Time.timeScale = 0f;
-            audiomanager.Stop("Ticking");
-        }*/
     }
+
+    IEnumerator ClockBlink(float waitTime)
+    {
+        var endTime = Time.time + waitTime;
+
+        //Holt sich alle Render-Objekte von dem Charakter
+        Renderer[] rs = clock.GetComponentsInChildren<Renderer>();
+
+        //Schaltet die Renderer regelmäßig an und aus -> Blinken
+        while (Time.time < endTime)
+        {
+            foreach (Renderer r in rs) { r.enabled = false; }
+            yield return new WaitForSeconds(0.2f);
+            foreach (Renderer r in rs) { r.enabled = true; }
+            yield return new WaitForSeconds(0.2f);
+        }
+
+        blinkEnd = true;
+        animator.enabled = true;
+
+        wonMenuUI.SetActive(true);
+        Time.timeScale = 0f;
+        //audiomanager.Stop("Ticking");
+    }
+
+
+
+    void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("ENTER");
+        if (other.gameObject.tag == "ziel")
+        {
+            Debug.Log("Ziel");
+            blinkEnd = false;
+            animator.enabled = false;
+            StartCoroutine(ClockBlink(2));
+
+        }
+    }
+
+   /* void OnCollisionEnter(Collision col)
+    {
+        Debug.Log("COLLISION");
+        Debug.Log(col.gameObject.tag);
+
+        //Kollision mit dem Ziel, Gewonnen Screen
+        if (col.gameObject.tag == "ziel")
+        {
+            Debug.Log("Ziel");
+            blinkEnd = false;
+            animator.enabled = false;
+            StartCoroutine(Blink(2, "ziel"));
+
+        }
+        //Kollision mit Eulen, Zeit wird um 5 Sekunden verlängert
+        if (col.gameObject.tag == "eule")
+        {
+            Debug.Log("Eule");
+            Destroy(col.gameObject);
+            GameObject.Find("TimerCanvas").GetComponent<Timer>().targetTime += (float)5.0;
+            audiomanager.Play("Owl");
+        }
+
+        //Kollision mit Raben, Zeit wird um 5 Sekunden reduziert
+        if (col.gameObject.tag == "rabe")
+        {
+            Debug.Log("Rabe");
+            Destroy(col.gameObject);
+            GameObject.Find("TimerCanvas").GetComponent<Timer>().targetTime -= (float)5.0;
+            audiomanager.Play("Raven");
+        }
+    }*/
 }

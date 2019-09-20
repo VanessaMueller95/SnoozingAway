@@ -95,7 +95,7 @@ public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
                     Instantiate(prefabPlacementObject, placentPosition, startRot);
                 }
             }
-            else
+            else if(stairs)
             {
                 if (hitObject.GetComponent<Cube>().code == 5)
                 {
@@ -120,6 +120,7 @@ public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
                 Debug.Log("Tag: " + hitObject.tag);
                 normal = hitInfo.normal;
                 Debug.Log("Normal: " + normal);
+                Debug.Log("Position: " +  hitObject.transform.position);
                 return true;
         }
         //wenn der Mauszeiger nicht auf der Fläche liegt wird false zurückgegeben 

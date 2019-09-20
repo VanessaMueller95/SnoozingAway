@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 79557f6def9a3eb40b813236f7e81c5c
+guid: 2746091f4af09134eb7b692529d077c6
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
@@ -27,8 +27,9 @@ ModelImporter:
     400018: "W\xFCrfel_2"
     400020: "W\xFCrfel_3"
     400022: Zeiger
-    2100000: Mat.2
-    2100002: Mat.1
+    2100000: No Name
+    2100002: Mat.2
+    2100004: Mat.1
     2300000: Arm_links
     2300002: Arm_Rechts
     2300004: Bein_links
@@ -117,7 +118,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1.5
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
