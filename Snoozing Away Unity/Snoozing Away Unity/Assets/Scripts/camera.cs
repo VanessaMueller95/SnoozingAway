@@ -21,9 +21,9 @@ public class camera : MonoBehaviour
         var cuboidSkript = GameObject.Find("Cuboid").GetComponent<Cuboid>();
         var dimensions = cuboidSkript.dimensions;
         var cellSize = cuboidSkript.cellSize;
-        var zoom = 1.4f;
+        var zoom = 1.6f;
 
-        dragDistance = Screen.width * 20 / 100;
+        dragDistance = Screen.width * 10 / 100;
 
         var camDist = new Vector3(dimensions.x * cellSize * zoom,
             dimensions.x * cellSize * zoom,

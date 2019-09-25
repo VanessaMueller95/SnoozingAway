@@ -327,8 +327,8 @@ public class Cuboid : MonoBehaviour
         return pos.x + pos.y * dim.x + pos.z * dim.x * dim.y;
     }
 
-    public static Vector3Int GetPosition(int idx, Vector3Int dim)
+    public static Vector3 GetPosition(int idx, Vector3Int dim)
     {
-        return new Vector3Int(idx % dim.x, (idx / dim.x) % dim.y, idx / (dim.x * dim.y));
+        return new Vector3((idx % dim.x)+0.5f, ((idx / dim.x) % dim.y) + 0.5f, (idx / (dim.x * dim.y)) + 0.5f);
     }
 }

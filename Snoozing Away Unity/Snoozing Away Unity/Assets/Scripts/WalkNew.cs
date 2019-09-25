@@ -39,6 +39,7 @@ public class WalkNew : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Time.timeScale = 1f;
         cuboid = FindObjectOfType<Cuboid>();
         animator = transform.Find("Snoozer-Walking").GetComponent<Animator>();
         clock = GameObject.Find("alarmclock");
@@ -193,6 +194,8 @@ public class WalkNew : MonoBehaviour
         Debug.Log("STATE: " + state);
         //Berechnung der Endzeit
         var endTime = Time.time + waitTime;
+        Debug.Log(Time.time);
+        Debug.Log(endTime);
 
         //Holt sich alle Render-Objekte von dem Charakter
         Renderer[] rs = GetComponentsInChildren<Renderer>();
@@ -200,13 +203,13 @@ public class WalkNew : MonoBehaviour
         //Schaltet die Renderer regelmäßig an und aus -> Blinken
         while (Time.time < endTime)
         {
-            //Debug.Log("Aktiv");
             foreach (Renderer r in rs) { r.enabled = false; }
             yield return new WaitForSeconds(0.2f);
-            //Debug.Log("Aktiv");
             foreach (Renderer r in rs) { r.enabled = true; }
             yield return new WaitForSeconds(0.2f);
         }
+
+        Debug.Log("Blinken Ende");
 
         blinkEnd = true;
         animator.enabled = true;
