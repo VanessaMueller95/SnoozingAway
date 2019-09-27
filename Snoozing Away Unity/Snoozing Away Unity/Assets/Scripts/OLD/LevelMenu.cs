@@ -6,9 +6,9 @@ using UnityEngine.SceneManagement;
 public class LevelMenu : MonoBehaviour {
 
     //Läd Level 1
-    public void LoadLevel1()
+    public void LoadLevel(int number)
     {
-        SceneManager.LoadScene("Cuboid");
+        SceneManager.LoadScene("level" + number);
     }
 
     //Läd das Hauptmenü

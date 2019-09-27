@@ -411,6 +411,7 @@ MonoBehaviour:
   dimensions: {x: 7, y: 7, z: 7}
   cellSize: 2
   levelLoaded: 0
+  levelNumber: 2
 --- !u!4 &120883179
 Transform:
   m_ObjectHideFlags: 0

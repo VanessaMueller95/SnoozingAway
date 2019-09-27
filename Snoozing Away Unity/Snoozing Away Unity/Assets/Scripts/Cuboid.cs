@@ -44,16 +44,20 @@ public class Cuboid : MonoBehaviour
     private Cursor EditorCursor = new Cursor();
 
     // store cell data - temporary storage also for editor
-    private string cellDataFile = "level1.dat";
+    //private string cellDataFile = "level1.dat";
 
     [HideInInspector]
     public bool levelLoaded = false;
 
     private IEnumerator coroutine;
 
+    public int levelNumber;
+    private string fileName;
+
     // Start is called before the first frame update
     IEnumerator Start()
     {
+        fileName = "level" + levelNumber + ".dat";
         coroutine = DownloadFile();
         yield return StartCoroutine(coroutine);
 
@@ -237,7 +241,7 @@ public class Cuboid : MonoBehaviour
 
     void Save()
     {
-        string dataPath = Path.Combine(Application.streamingAssetsPath, "level1.dat");
+        string dataPath = Path.Combine(Application.streamingAssetsPath, fileName);
 
         FileStream file;
 
@@ -248,14 +252,14 @@ public class Cuboid : MonoBehaviour
 
         file.Close();
     }
-    static IEnumerator DownloadFile()
+    public IEnumerator DownloadFile()
     {
         Debug.Log("TEEEEEEEEEEEEEEEEEST");
         UnityWebRequest uwr;
-        uwr = new UnityWebRequest(Path.Combine(Application.streamingAssetsPath, "level1.dat"));
-        uwr.downloadHandler = new DownloadHandlerFile(Path.Combine(Application.persistentDataPath, "level1.dat"));
+        uwr = new UnityWebRequest(Path.Combine(Application.streamingAssetsPath, fileName));
+        uwr.downloadHandler = new DownloadHandlerFile(Path.Combine(Application.persistentDataPath, fileName));
         yield return uwr.SendWebRequest();
-        Debug.Log(Path.Combine(Application.streamingAssetsPath, "level1.dat") + " File successfully downloaded and saved to " + Path.Combine(Application.persistentDataPath, "level1.dat"));
+        Debug.Log(Path.Combine(Application.streamingAssetsPath, fileName) + " File successfully downloaded and saved to " + Path.Combine(Application.persistentDataPath, "level1.dat"));
         
     }
 
@@ -263,7 +267,7 @@ public class Cuboid : MonoBehaviour
     bool Read()
     {
 
-        string dataPath = Path.Combine(Application.persistentDataPath, "level1.dat");
+        string dataPath = Path.Combine(Application.persistentDataPath, fileName);
         Debug.Log(dataPath);
 
         FileStream file;
