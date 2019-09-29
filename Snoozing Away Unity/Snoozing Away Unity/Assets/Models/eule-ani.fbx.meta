@@ -45,7 +45,7 @@ ModelImporter:
     4300008: rWing2
     4300010: rWing1
     4300012: Body
-    7400000: eule
+    7400000: Cinema_4D_Basis
     9500000: //RootNode
   externalObjects: {}
   materials:
@@ -76,7 +76,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: eule
+      name: Cinema_4D_Basis
       takeName: Cinema_4D_Basis
       firstFrame: 0
       lastFrame: 30
@@ -109,6 +109,7 @@ ModelImporter:
     globalScale: 1
     meshCompression: 0
     addColliders: 0
+    useSRGBMaterialColor: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
@@ -133,6 +134,9 @@ ModelImporter:
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
   importAnimation: 1
   copyAvatar: 0
   humanDescription:

@@ -218,7 +218,7 @@ public class WalkNew : MonoBehaviour
         //Bei Start wird das Ticken aktiviert und der Timer gestartet
         if (state == "start")
         {
-            //GameObject.Find("TimerCanvas").GetComponent<Timer>().timerActive = true;
+            GameObject.Find("TimerCanvas").GetComponent<Timer>().timerActive = true;
             //audiomanager.Play("Ticking");
         }
 
@@ -266,7 +266,23 @@ public class WalkNew : MonoBehaviour
             blinkEnd = false;
             animator.enabled = false;
             StartCoroutine(ClockBlink(2));
+        }
 
+        if (other.gameObject.tag == "eule")
+        {
+            Debug.Log("Eule");
+            Destroy(other.gameObject);
+            GameObject.Find("TimerCanvas").GetComponent<Timer>().targetTime += (float)5.0;
+            //audiomanager.Play("Owl");
+        }
+
+        //Kollision mit Raben, Zeit wird um 5 Sekunden reduziert
+        if (other.gameObject.tag == "rabe")
+        {
+            Debug.Log("Rabe");
+            Destroy(other.gameObject);
+            GameObject.Find("TimerCanvas").GetComponent<Timer>().targetTime -= (float)5.0;
+            //audiomanager.Play("Raven");
         }
     }
 

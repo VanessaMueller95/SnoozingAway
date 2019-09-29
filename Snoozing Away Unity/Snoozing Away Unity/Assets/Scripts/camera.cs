@@ -13,6 +13,8 @@ public class camera : MonoBehaviour
     private Vector3 lp;   //Touch Endposition
     private float dragDistance;  //minimale Laenge um Swipe auszulösen
 
+    public float zoom;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +23,7 @@ public class camera : MonoBehaviour
         var cuboidSkript = GameObject.Find("Cuboid").GetComponent<Cuboid>();
         var dimensions = cuboidSkript.dimensions;
         var cellSize = cuboidSkript.cellSize;
-        var zoom = 1.6f;
+        //var zoom = 1.6f;
 
         dragDistance = Screen.width * 10 / 100;
 

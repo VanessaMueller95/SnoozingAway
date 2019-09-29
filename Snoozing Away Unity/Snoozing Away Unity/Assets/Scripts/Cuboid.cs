@@ -29,7 +29,7 @@ public class Cuboid : MonoBehaviour
     protected class Cursor {
         public int pos = 0;
         public int code = 0;
-        public bool enabled = true;
+        public bool enabled = false;
     }
 
 

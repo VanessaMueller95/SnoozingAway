@@ -100,4 +100,13 @@ public class PauseMenu : MonoBehaviour {
         Time.timeScale = 1.0f;
         SceneManager.LoadScene("Menu");
     }
+
+    public void NextLevel()
+    {
+        //FindObjectOfType<AudioManager>().Stop("Ring");
+        var nextLevel = GameObject.Find("Cuboid").GetComponent<Cuboid>().levelNumber +1;
+        GameIsPause = false;
+        Time.timeScale = 1.0f;
+        SceneManager.LoadScene("level" + nextLevel);
+    }
 }

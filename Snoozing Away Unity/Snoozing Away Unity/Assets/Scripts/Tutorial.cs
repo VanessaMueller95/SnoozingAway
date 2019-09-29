@@ -25,7 +25,20 @@ public class Tutorial : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (!tutorialFinished)
+        {
+            if (Time.timeScale == 0f)
+            {
+                tutorials[activeTutorial].SetActive(false);
+            }
+            else
+            {
+                if (!tutorials[activeTutorial].activeSelf)
+                {
+                    tutorials[activeTutorial].SetActive(true);
+                }
+            }
+        }
     }
 
     public void nextTutorial()
