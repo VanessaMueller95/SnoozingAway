@@ -80,7 +80,8 @@ public class PauseMenu : MonoBehaviour {
         //FindObjectOfType<AudioManager>().Stop("Ticking");
         //FindObjectOfType<AudioManager>().Stop("Ring");
         Time.timeScale = 1.0f;
-        SceneManager.LoadScene("Cuboid");
+        var Level = GameObject.Find("Cuboid").GetComponent<Cuboid>().levelNumber;
+        SceneManager.LoadScene("level" + Level);
     }
 
     //Laden der Levelauswahl
