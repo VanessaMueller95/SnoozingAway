@@ -9,12 +9,10 @@ public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     public GameObject prefabPlacementObject;
 
     GameObject hitObject = null;
-    Collider hitCollider = null;
     Vector3 normal;
 
     private GameObject instancedItem;
     private GameObject parent;
-    Vector3 startPosition;
 
     public LayerMask mask;
 
@@ -27,7 +25,6 @@ public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
         Debug.Log("DRAG AKTIV");
         parent = GameObject.Find("UI");
-        startPosition = gameObject.transform.position;
         instancedItem = Instantiate(gameObject, parent.transform);
         instancedItem.GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
     }
@@ -115,7 +112,6 @@ public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
                 point = hitInfo.point;
                 Debug.Log("Punkt: " + point);
                 hitObject = hitInfo.collider.gameObject;
-                hitCollider = hitInfo.collider;
                 Debug.Log("GameObject: " + hitObject);
                 Debug.Log("Tag: " + hitObject.tag);
                 normal = hitInfo.normal;

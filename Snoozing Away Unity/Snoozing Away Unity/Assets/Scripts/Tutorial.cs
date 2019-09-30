@@ -17,7 +17,6 @@ public class Tutorial : MonoBehaviour
         foreach (Transform child in transform)
         {
             tutorials[i] = child.gameObject;
-            Debug.Log(tutorials[i]);
             i++;
         }
     }

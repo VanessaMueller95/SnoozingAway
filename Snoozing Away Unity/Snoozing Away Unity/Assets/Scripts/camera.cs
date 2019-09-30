@@ -18,8 +18,6 @@ public class camera : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-        var cuboid = GameObject.Find("Cuboid");
         var cuboidSkript = GameObject.Find("Cuboid").GetComponent<Cuboid>();
         var dimensions = cuboidSkript.dimensions;
         var cellSize = cuboidSkript.cellSize;
@@ -40,13 +38,11 @@ public class camera : MonoBehaviour
         cameraPoints[5] = Vector3.Scale(Vector3.down, camDist);
     }
 
-    // Update is called once per frame
     void Update()
     {
         
             // get the target position
             var target = cameraPoints[currentCameraPos];
-            var target2 = cameraPoints[0];
 
 
             // transform update only if we haven't reached the point
@@ -187,6 +183,5 @@ public class camera : MonoBehaviour
                 currentCameraPos = 5;
             }
         }
-
     
 }

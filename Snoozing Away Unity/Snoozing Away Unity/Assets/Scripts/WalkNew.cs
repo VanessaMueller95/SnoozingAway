@@ -10,8 +10,6 @@ public class WalkNew : MonoBehaviour
     private int currentPos;
     private int currentSide = 0;
 
-    private bool inAnimation = false;
-
     private Vector3[] sideDirections = {
         Vector3.up,Vector3.left,Vector3.right,Vector3.down,Vector3.forward,Vector3.back
     };
@@ -153,7 +151,6 @@ public class WalkNew : MonoBehaviour
 
     public void Reset()
     {
-        Debug.Log("enabled: " + cuboid.GetEnabledCount);
 
         for (var i = 0; i < cuboid.CellCount; i++)
         {
@@ -194,8 +191,6 @@ public class WalkNew : MonoBehaviour
         Debug.Log("STATE: " + state);
         //Berechnung der Endzeit
         var endTime = Time.time + waitTime;
-        Debug.Log(Time.time);
-        Debug.Log(endTime);
 
         //Holt sich alle Render-Objekte von dem Charakter
         Renderer[] rs = GetComponentsInChildren<Renderer>();
@@ -208,8 +203,6 @@ public class WalkNew : MonoBehaviour
             foreach (Renderer r in rs) { r.enabled = true; }
             yield return new WaitForSeconds(0.2f);
         }
-
-        Debug.Log("Blinken Ende");
 
         blinkEnd = true;
         animator.enabled = true;
@@ -259,7 +252,6 @@ public class WalkNew : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("ENTER");
         if (other.gameObject.tag == "ziel")
         {
             Debug.Log("Ziel");
@@ -285,37 +277,4 @@ public class WalkNew : MonoBehaviour
             //audiomanager.Play("Raven");
         }
     }
-
-   /* void OnCollisionEnter(Collision col)
-    {
-        Debug.Log("COLLISION");
-        Debug.Log(col.gameObject.tag);
-
-        //Kollision mit dem Ziel, Gewonnen Screen
-        if (col.gameObject.tag == "ziel")
-        {
-            Debug.Log("Ziel");
-            blinkEnd = false;
-            animator.enabled = false;
-            StartCoroutine(Blink(2, "ziel"));
-
-        }
-        //Kollision mit Eulen, Zeit wird um 5 Sekunden verlängert
-        if (col.gameObject.tag == "eule")
-        {
-            Debug.Log("Eule");
-            Destroy(col.gameObject);
-            GameObject.Find("TimerCanvas").GetComponent<Timer>().targetTime += (float)5.0;
-            audiomanager.Play("Owl");
-        }
-
-        //Kollision mit Raben, Zeit wird um 5 Sekunden reduziert
-        if (col.gameObject.tag == "rabe")
-        {
-            Debug.Log("Rabe");
-            Destroy(col.gameObject);
-            GameObject.Find("TimerCanvas").GetComponent<Timer>().targetTime -= (float)5.0;
-            audiomanager.Play("Raven");
-        }
-    }*/
 }

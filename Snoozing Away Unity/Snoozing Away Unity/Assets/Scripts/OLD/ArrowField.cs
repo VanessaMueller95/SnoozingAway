@@ -8,7 +8,6 @@ public class ArrowField : MonoBehaviour {
     //Dropdown der Lauf-Richtung für den Inspektor
     public enum Orientation { Left, Right, Backward, Forward }
     public Orientation orientation;
-    private string lastRotation = null;
 
     private void Start()
     {

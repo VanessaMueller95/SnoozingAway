@@ -43,9 +43,6 @@ public class Cuboid : MonoBehaviour
 
     private Cursor EditorCursor = new Cursor();
 
-    // store cell data - temporary storage also for editor
-    //private string cellDataFile = "level1.dat";
-
     [HideInInspector]
     public bool levelLoaded = false;
 
@@ -65,7 +62,6 @@ public class Cuboid : MonoBehaviour
 
         // create cells - welcome to Unity vectors having no trace
         cells = new Cell[dimensions.x * dimensions.y * dimensions.z];
-        Debug.Log(cells.Length);
 
         for(int i = 0; i < cells.Length;i++) {
             cells[i] = new Cell();
@@ -195,7 +191,7 @@ public class Cuboid : MonoBehaviour
             EditorCursor.code = 0;
         }
         Debug.Log("Aktuelles Objekt: " + EditorCursor.code);
-        Debug.Log("0: Boden; 1: Wasser; 2: Eule; 3: Raben; 4:Treppe");
+        Debug.Log("0: Boden; 1: Wasser; 2: Rabe; 3: Eule; 4:Treppe; 5:TreppePlatzhalter; 4:Start; 4:Ziel");
     }
 
     void UpdateVisuals()
@@ -220,7 +216,6 @@ public class Cuboid : MonoBehaviour
                     var cellObject = Instantiate(item, p, Quaternion.identity);
 
                     cellObject.transform.parent = transform;
-                    // cellObject.transform.localPosition = p;
 
                     cellObject.name = "cell_" + pos_i.x + "_" + pos_i.y + "_" + pos_i.z;
 
@@ -254,7 +249,6 @@ public class Cuboid : MonoBehaviour
     }
     public IEnumerator DownloadFile()
     {
-        Debug.Log("TEEEEEEEEEEEEEEEEEST");
         UnityWebRequest uwr;
         uwr = new UnityWebRequest(Path.Combine(Application.streamingAssetsPath, fileName));
         uwr.downloadHandler = new DownloadHandlerFile(Path.Combine(Application.persistentDataPath, fileName));
