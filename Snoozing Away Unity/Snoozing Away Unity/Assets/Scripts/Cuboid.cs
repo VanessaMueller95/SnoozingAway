@@ -52,11 +52,11 @@ public class Cuboid : MonoBehaviour
     private string fileName;
 
     // Start is called before the first frame update
-    IEnumerator Start()
+    void Start()
     {
         fileName = "level" + levelNumber + ".dat";
-        coroutine = DownloadFile();
-        yield return StartCoroutine(coroutine);
+        /*coroutine = DownloadFile();
+        yield return StartCoroutine(coroutine);*/
 
         Debug.Log(Application.persistentDataPath);
 
@@ -260,8 +260,8 @@ public class Cuboid : MonoBehaviour
 
     bool Read()
     {
-
-        string dataPath = Path.Combine(Application.persistentDataPath, fileName);
+        string dataPath = "Assets/level/" + fileName;
+        //string dataPath = Path.Combine(Application.persistentDataPath, fileName);
         Debug.Log(dataPath);
 
         FileStream file;
