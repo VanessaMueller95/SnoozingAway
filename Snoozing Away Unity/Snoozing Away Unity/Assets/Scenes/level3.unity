@@ -408,7 +408,7 @@ MonoBehaviour:
   - {fileID: 4081395247116072662, guid: 54ebff2b05bb77846a9fb1ca9dc60590, type: 3}
   - {fileID: 8898893220950600225, guid: de6bcb302b3356f44adc8ebbd6ee54f0, type: 3}
   - {fileID: 8898893220950600225, guid: 86f43730170f31e49aa89398d873a841, type: 3}
-  dimensions: {x: 7, y: 7, z: 7}
+  dimensions: {x: 7, y: 5, z: 7}
   cellSize: 2
   levelLoaded: 0
   levelNumber: 3
@@ -4769,7 +4769,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1771544434}
   m_OnClick:
     m_PersistentCalls:
@@ -5127,7 +5127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6bd9281c4e934742ba55da8c36d3fe6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zoom: 1.6
+  zoom: 1.4
 --- !u!1 &1931958020
 GameObject:
   m_ObjectHideFlags: 0

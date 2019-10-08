@@ -74,24 +74,19 @@ public class WalkNew : MonoBehaviour
         }
 
         //Raycast Debug
-        Debug.DrawRay(transform.position + transform.up, (Quaternion.AngleAxis(-85, transform.right) * (transform.transform.forward * -1))*5, Color.yellow);
+        Debug.DrawRay(transform.position + transform.up, transform.TransformDirection(Vector3.down) * 1f, Color.yellow);
         Debug.DrawRay(transform.position + transform.up, transform.TransformDirection(Vector3.forward) * 10f, Color.blue);
 
         if (Physics.Raycast(transform.position + transform.up, transform.TransformDirection(Vector3.down) * 1f, out hitFloor, Mathf.Infinity, mask))
         {
             Vector3 distance = hitFloor.point + transform.up * 0.1f;
-            //Debug.Log("Boden getroffen, Abstand: " + hitDown.distance);
-            //Debug.Log("Walking on: " + hitFloor.collider.gameObject.tag);
-            //Berechnung des Abstandes vom Boden
-
-            //Debug.Log("Walking on: " + hitFloor.collider.gameObject.GetComponent<Cube>().code);
-            //Debug.Log("0: Boden; 1: Wasser; 2: Eule; 3: Raben; 4:Treppe");
-            if (hitDown.distance < 2)
+            if (hitFloor.distance < 2)
             {
                 transform.position = Vector3.Lerp(transform.position, distance, Time.deltaTime * (walkingSpeed * 4));
             }
-            if (hitFloor.collider.gameObject.GetComponent<Cube>().code == 1)
+            if (hitFloor.distance < 2 && hitFloor.collider.gameObject.GetComponent<Cube>().code == 1)
             {
+                Debug.Log(hitFloor.collider.gameObject);
                 Debug.Log("Water");
                 blinkEnd = false;
                 animator.enabled = false;
@@ -107,7 +102,7 @@ public class WalkNew : MonoBehaviour
                 //Rotation von Snoozer in Richtung der Normalen der Wand
                 Quaternion newRotation = Quaternion.FromToRotation(transform.up, hitWall.normal) * transform.rotation;
                 //Animation der Position von Snoozer
-                transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * (walkingSpeed*4));
+                transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * (walkingSpeed*5));
             }
             else if (hitWall.collider.gameObject.tag == "turnAround" && hitWall.distance < 0.3)
             {
