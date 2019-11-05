@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class Timer : MonoBehaviour {
@@ -15,6 +16,18 @@ public class Timer : MonoBehaviour {
     //Übergabe des MenüObjekts, damit es nach Wunsch aktiviert werden kann
     public GameObject restartMenuUI;
 
+    public bool colorChanged = false;
+
+    public Camera cam;
+
+
+    Text text;
+
+    private void Start()
+    {
+        cam = Camera.main.GetComponent<Camera>();
+    }
+
     void Update()
     {
         //Abfrage nach dem Status und der Verbleibenden Zeit 
@@ -29,6 +42,14 @@ public class Timer : MonoBehaviour {
         if (targetTime <= 0.0f && timerActive == true)
         {
             timerEnd();
+        }
+
+        if (targetTime <= 85.0f && colorChanged == false)
+        {
+            //uiText.color = new Color(193f/255.0f, 86f/255.0f, 86f/255.0f);
+            colorChanged = true;
+            StartCoroutine(UpdateTextColor());
+            Debug.Log("In methode");
         }
 
     }
@@ -48,6 +69,23 @@ public class Timer : MonoBehaviour {
         timerActive = false;
         Time.timeScale = 0f;
         restartMenuUI.SetActive(true);
+    }
+
+    public IEnumerator UpdateTextColor()
+    {
+        Debug.Log("Test1");
+        float t = 0;
+        while (t < 1)
+        {
+            Debug.Log("Test");
+            // Now the loop will execute on every end of frame until the condition is true
+            uiText.color = Color.Lerp(new Color(1f, 1f, 1f), new Color(193f / 255.0f, 86f / 255.0f, 86f / 255.0f), t);
+
+            cam.backgroundColor = Color.Lerp(new Color(183f/255f, 183f / 255f, 183f / 255f), new Color(200f / 255.0f, 158f / 255.0f, 158f / 255.0f), t);
+
+            t += Time.deltaTime / 5f;
+            yield return new WaitForEndOfFrame(); // So that I return something at least.
+        }
     }
 
 }

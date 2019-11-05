@@ -206,7 +206,8 @@ public class WalkNew : MonoBehaviour
         //Bei Start wird das Ticken aktiviert und der Timer gestartet
         if (state == "start")
         {
-            GameObject.Find("TimerCanvas").GetComponent<Timer>().timerActive = true;
+            //GameObject.Find("TimerCanvas").GetComponent<Timer>().timerActive = true;
+            GameObject.Find("TimerImage").GetComponent<ImageTimer>().timerActive = true;
             //audiomanager.Play("Ticking");
         }
 
