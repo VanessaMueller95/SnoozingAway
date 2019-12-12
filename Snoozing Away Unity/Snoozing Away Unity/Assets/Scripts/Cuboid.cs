@@ -223,12 +223,6 @@ public class Cuboid : MonoBehaviour
 
                     cellSkript.code = cells[i].code;
                     cellSkript.enabled = true;
-                    cellSkript.walkable[0] = false;
-                    cellSkript.walkable[1] = false;
-                    cellSkript.walkable[2] = false;
-                    cellSkript.walkable[3] = false;
-                    cellSkript.walkable[4] = false;
-                    cellSkript.walkable[5] = false;
                 }
             }
         }
@@ -269,6 +263,8 @@ public class Cuboid : MonoBehaviour
         if (File.Exists(dataPath))
         {
             file = File.OpenRead(dataPath);
+            levelLoaded = true;
+
         }
         else
         {
@@ -283,8 +279,6 @@ public class Cuboid : MonoBehaviour
         cells = (Cell[])bf.Deserialize(file);
 
         file.Close();
-
-        levelLoaded = true;
 
         return true;
     }

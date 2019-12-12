@@ -20,12 +20,16 @@ public class Timer : MonoBehaviour {
 
     public Camera cam;
 
+    private Animator animator;
+
+
 
     Text text;
 
     private void Start()
     {
         cam = Camera.main.GetComponent<Camera>();
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -50,6 +54,11 @@ public class Timer : MonoBehaviour {
             colorChanged = true;
             StartCoroutine(UpdateTextColor());
             Debug.Log("In methode");
+        }
+
+        if (targetTime <= 85.0f && timerActive)
+        {
+            animator.SetBool("active", true);
         }
 
     }

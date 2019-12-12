@@ -33,16 +33,21 @@ public class WalkNew : MonoBehaviour
     public GameObject clock;
     private int clockPosition;
 
+    bool water = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        //RenderSettings.ambientLight = new Color(191f / 255.0f, 191f / 255.0f, 191f / 255.0f, 1f);
+        //RenderSettings.ambientIntensity = 0.6f;
+        audiomanager = FindObjectOfType<AudioManager>();
         Time.timeScale = 1f;
         cuboid = FindObjectOfType<Cuboid>();
         animator = transform.Find("Snoozer-Walking").GetComponent<Animator>();
         clock = GameObject.Find("alarmclock");
 
         StartCoroutine(StartLevel());
+
     }
 
     IEnumerator StartLevel()
@@ -86,11 +91,14 @@ public class WalkNew : MonoBehaviour
             }
             if (hitFloor.distance < 2 && hitFloor.collider.gameObject.GetComponent<Cube>().code == 1)
             {
-                Debug.Log(hitFloor.collider.gameObject);
-                Debug.Log("Water");
-                blinkEnd = false;
-                animator.enabled = false;
-                StartCoroutine(Blink(2, "water"));
+                if (!water)
+                {
+                    audiomanager.Play("Water");
+                    blinkEnd = false;
+                    animator.enabled = false;
+                    StartCoroutine(Blink(2, "water"));
+                    water = true;
+                }
             }
         }
         
@@ -208,7 +216,7 @@ public class WalkNew : MonoBehaviour
         {
             //GameObject.Find("TimerCanvas").GetComponent<Timer>().timerActive = true;
             GameObject.Find("TimerImage").GetComponent<ImageTimer>().timerActive = true;
-            //audiomanager.Play("Ticking");
+            audiomanager.Play("Ticking");
         }
 
         //Bei Wasser wird das Restart Menü aufgerufen, die Zeit angehalten und das Ticken beendet
@@ -216,7 +224,7 @@ public class WalkNew : MonoBehaviour
         {
             restartMenuUI.SetActive(true);
             Time.timeScale = 0f;
-            //audiomanager.Stop("Ticking");
+            audiomanager.Stop("Ticking");
         }
     }
 
@@ -241,7 +249,7 @@ public class WalkNew : MonoBehaviour
 
         wonMenuUI.SetActive(true);
         Time.timeScale = 0f;
-        //audiomanager.Stop("Ticking");
+        audiomanager.Stop("Ticking");
     }
 
 
@@ -260,8 +268,8 @@ public class WalkNew : MonoBehaviour
         {
             Debug.Log("Eule");
             Destroy(other.gameObject);
-            GameObject.Find("TimerCanvas").GetComponent<Timer>().targetTime += (float)5.0;
-            //audiomanager.Play("Owl");
+            GameObject.Find("TimerImage").GetComponent<ImageTimer>().time += (float)5.0;
+            audiomanager.Play("Owl");
         }
 
         //Kollision mit Raben, Zeit wird um 5 Sekunden reduziert
@@ -269,8 +277,8 @@ public class WalkNew : MonoBehaviour
         {
             Debug.Log("Rabe");
             Destroy(other.gameObject);
-            GameObject.Find("TimerCanvas").GetComponent<Timer>().targetTime -= (float)5.0;
-            //audiomanager.Play("Raven");
+            GameObject.Find("TimerImage").GetComponent<ImageTimer>().time -= (float)5.0;
+            audiomanager.Play("Raven");
         }
     }
 }
