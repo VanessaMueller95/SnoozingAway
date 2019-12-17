@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
 
 public class ImageTimer : MonoBehaviour
@@ -8,17 +7,21 @@ public class ImageTimer : MonoBehaviour
     //Zum Aktivieren oder Deaktivieren
     public bool timerActive = false;
 
-    //Übergabe des MenüObjekts, damit es nach Wunsch aktiviert werden kann
+    //Übergabe des MenüObjekts, damit es aktiviert werden kann
     public GameObject restartMenuUI;
 
     Image fillImg;
+
+    //Zielzeit
     public float timeAmt = 50;
+    //aktuelle Zeit
     public float time;
 
+    //Variablen zur Animation der Skybox
     Material skybox_Material;
+    private float t = 0.0f;
 
-    static float t = 0.0f;
-
+    //Animator für das Pulsieren
     private Animator animator;
 
     // Use this for initialization
@@ -35,23 +38,25 @@ public class ImageTimer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(time);
-        Debug.Log(timeAmt);
+        // Zeit wird reduziert und das Bild aktualisiert
         if (time > 0 && timerActive == true)
         {
             time -= Time.deltaTime;
             fillImg.fillAmount = time / timeAmt;
         }
+        //Timer wird beendet wenn die Zeit unter 0 sinkt
         else if (time <= 0 && timerActive == true)
         {
             timerEnd();
         }
-        if(time < 40 && timerActive == true && t<1.0)
+        //sinkt die Zeit unter 15 Sekunden beginnen die Hinweisanimationen
+        if(time < 15 && timerActive == true && t<1.0)
         {
+            //Skybox Shader wird animiert
             float blendStep = Mathf.Lerp(0, 1, t);
             t += 0.3f * Time.deltaTime;
-            Debug.Log(blendStep);
             skybox_Material.SetFloat("_Blend", blendStep);
+            //Blinkanimation wird gestartet
             animator.SetBool("active", true);
         }
     }

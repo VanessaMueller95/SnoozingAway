@@ -19,9 +19,9 @@ public class camera : MonoBehaviour
     void Start()
     {
         var cuboidSkript = GameObject.Find("Cuboid").GetComponent<Cuboid>();
+
         var dimensions = cuboidSkript.dimensions;
         var cellSize = cuboidSkript.cellSize;
-        //var zoom = 1.6f;
 
         dragDistance = Screen.width * 10 / 100;
 
@@ -48,14 +48,13 @@ public class camera : MonoBehaviour
             // transform update only if we haven't reached the point
             var delta = transform.position - target;
 
-            // never compare on 0 with FP ;) - remember PROG1 
             // this should be Mathf.Epsilon: thanks Unity for breaking this convention
             if (delta.sqrMagnitude > 0.1F)
             {
-                //Debug.Log(delta.sqrMagnitude);
-
                 // can make the 'whoopiness' adjustable with last parameter of slerp
                 transform.position = Vector3.Slerp(transform.position, target, 0.4f);
+
+                //passt die Ausrichtung der Kamera zur Welt hin abhängig von der Position an
                 if (currentCameraPos == 4)
                 {
                     transform.LookAt(Vector3.zero, Vector3.forward);
@@ -158,6 +157,7 @@ public class camera : MonoBehaviour
                 }
             }
 
+            //Kameraanpassung über Tastatur
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 currentCameraPos = 2;

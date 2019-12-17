@@ -6,13 +6,6 @@ using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine.Networking;
 
 
-/*
- Das ist hier erstmal so wie man es nicht machen soll: alles in einem Skript 
-
-eine Voxelstruktur in der die Charaktere sich bewegen. 
-
- */
-
 public class Cuboid : MonoBehaviour
 {
     [System.Serializable]
@@ -54,11 +47,10 @@ public class Cuboid : MonoBehaviour
     // Start is called before the first frame update
     IEnumerator Start()
     {
+        //Datei des aktuellen Levelns wird geladen
         fileName = "level" + levelNumber + ".dat";
         coroutine = DownloadFile();
         yield return StartCoroutine(coroutine);
-
-        Debug.Log(Application.persistentDataPath);
 
         // create cells - welcome to Unity vectors having no trace
         cells = new Cell[dimensions.x * dimensions.y * dimensions.z];
@@ -71,97 +63,105 @@ public class Cuboid : MonoBehaviour
 
         UpdateVisuals();
 
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        // this should go into some update cursor method ...
-        var updatedCursorPos = EditorCursor.pos;
-
-        // general stuff
-        if (Input.GetKeyUp(KeyCode.P))
+        if (Input.GetKeyUp(KeyCode.C))
         {
-            Debug.Log("Löschen");
-            Remove();
-            UpdateVisuals();
-        }
-        if (Input.GetKeyUp(KeyCode.O))
-        {
-            changePlacementObject();
-        }
-        if (Input.GetKeyUp(KeyCode.Q)) {
-            Application.Quit();
-        } else 
-        // generate random world
-        if (Input.GetKeyUp(KeyCode.G))
-        {
-            Randomize();
-            //UpdateVisuals();
-        } else if (Input.GetKeyUp(KeyCode.C)) {
             // toggle cursor
             EditorCursor.enabled = !EditorCursor.enabled;
-        }
-        // save stuff
-        else if (Input.GetKeyUp(KeyCode.S))
-        {
-            Save();
-        }
-        // read and visualize
-        else if (Input.GetKeyUp(KeyCode.R))
-        {
-            Read();
-            UpdateVisuals();
-        }
-        /* minimal editor */
-        else if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            updatedCursorPos += dimensions.x;
-        }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            updatedCursorPos -= dimensions.x;
-        }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            updatedCursorPos += 1;
-        }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            updatedCursorPos -= 1;
-        }
-        else if (Input.GetAxis("Mouse ScrollWheel") < 0)
-        {
-            updatedCursorPos += dimensions.x * dimensions.y;
-        }
-        else if (Input.GetAxis("Mouse ScrollWheel") > 0)
-        {
-            updatedCursorPos -= dimensions.x * dimensions.y;
-        }
-        else if (Input.GetKeyUp(KeyCode.Space))
-        {
-            cells[EditorCursor.pos].code = EditorCursor.code;
-            cells[EditorCursor.pos].enabled = !cells[EditorCursor.pos].enabled;
-            UpdateVisuals();
+
+            // visualize cursor if applicable
+            var pos_i = GetPosition(EditorCursor.pos, dimensions);
+            Vector3 p = (Vector3)pos_i * cellSize - CenterPoint;
+
+            cursorShape.transform.localPosition = p;
         }
 
-        // just in case
-        cursorShape.GetComponent<Renderer>().enabled = EditorCursor.enabled;
+        if (EditorCursor.enabled)
+        {
+            var updatedCursorPos = EditorCursor.pos;
 
-        // clamp
-        EditorCursor.pos = Mathf.Clamp(updatedCursorPos,0,cells.Length-1);
+            // Verwaltung des Editors
+            if (Input.GetKeyUp(KeyCode.P))
+            {
+                Remove();
+                UpdateVisuals();
+            }
+            if (Input.GetKeyUp(KeyCode.O))
+            {
+                changePlacementObject();
+            }
+            if (Input.GetKeyUp(KeyCode.Q))
+            {
+                Application.Quit();
+            }
+            else
+            // generate random world
+            if (Input.GetKeyUp(KeyCode.G))
+            {
+                Randomize();
+            }
+            // save 
+            else if (Input.GetKeyUp(KeyCode.S))
+            {
+                Save();
+            }
+            // read and visualize
+            else if (Input.GetKeyUp(KeyCode.R))
+            {
+                Read();
+                UpdateVisuals();
+            }
+            /* minimal editor */
+            else if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                updatedCursorPos += dimensions.x;
+            }
+            else if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                updatedCursorPos -= dimensions.x;
+            }
+            else if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                updatedCursorPos += 1;
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                updatedCursorPos -= 1;
+            }
+            else if (Input.GetAxis("Mouse ScrollWheel") < 0)
+            {
+                updatedCursorPos += dimensions.x * dimensions.y;
+            }
+            else if (Input.GetAxis("Mouse ScrollWheel") > 0)
+            {
+                updatedCursorPos -= dimensions.x * dimensions.y;
+            }
+            else if (Input.GetKeyUp(KeyCode.Space))
+            {
+                cells[EditorCursor.pos].code = EditorCursor.code;
+                cells[EditorCursor.pos].enabled = !cells[EditorCursor.pos].enabled;
+                UpdateVisuals();
+            }
 
-        // visualize cursor if applicable
-        var pos_i = GetPosition(EditorCursor.pos, dimensions);
-        Vector3 p = (Vector3)pos_i * cellSize - CenterPoint;
+            // just in case
+            cursorShape.GetComponent<Renderer>().enabled = EditorCursor.enabled;
 
-        cursorShape.transform.localPosition = p;
+            // clamp
+            EditorCursor.pos = Mathf.Clamp(updatedCursorPos, 0, cells.Length - 1);
+
+           
+        }
     }
+
 
     void Remove()
     {
-        Debug.Log("in Methode");
         foreach (Cell c in cells)
         {
             c.enabled = false;
@@ -191,7 +191,7 @@ public class Cuboid : MonoBehaviour
             EditorCursor.code = 0;
         }
         Debug.Log("Aktuelles Objekt: " + EditorCursor.code);
-        Debug.Log("0: Boden; 1: Wasser; 2: Rabe; 3: Eule; 4:Treppe; 5:TreppePlatzhalter; 4:Start; 4:Ziel");
+        Debug.Log("0: Boden; 1: Wasser; 2: Rabe; 3: Eule; 4:Treppe; 5:TreppePlatzhalter; 6:Start; 7:Ziel");
     }
 
     void UpdateVisuals()
@@ -228,6 +228,7 @@ public class Cuboid : MonoBehaviour
         }
     }
 
+    //speichert das File
     void Save()
     {
         string dataPath = Path.Combine(Application.streamingAssetsPath, fileName);
@@ -241,20 +242,20 @@ public class Cuboid : MonoBehaviour
 
         file.Close();
     }
+
+    //Download es Files, nötig für Kompatibilität zu Android
     public IEnumerator DownloadFile()
     {
         UnityWebRequest uwr;
         uwr = new UnityWebRequest(Path.Combine(Application.streamingAssetsPath, fileName));
         uwr.downloadHandler = new DownloadHandlerFile(Path.Combine(Application.persistentDataPath, fileName));
         yield return uwr.SendWebRequest();
-        Debug.Log(Path.Combine(Application.streamingAssetsPath, fileName) + " File successfully downloaded and saved to " + Path.Combine(Application.persistentDataPath, "level1.dat"));
-        
+        Debug.Log(Path.Combine(Application.streamingAssetsPath, fileName) + " File successfully downloaded and saved to " + Path.Combine(Application.persistentDataPath, "level1.dat")); 
     }
 
-
+    //Leveldatei wird gelesen
     bool Read()
     {
-
         string dataPath = Path.Combine(Application.persistentDataPath, fileName);
         Debug.Log(dataPath);
 
@@ -263,7 +264,6 @@ public class Cuboid : MonoBehaviour
         if (File.Exists(dataPath))
         {
             file = File.OpenRead(dataPath);
-            levelLoaded = true;
 
         }
         else
@@ -274,11 +274,12 @@ public class Cuboid : MonoBehaviour
 
         BinaryFormatter bf = new BinaryFormatter();
 
-   
-
         cells = (Cell[])bf.Deserialize(file);
 
         file.Close();
+
+        //Variable auf die im Walking Skript gewartet wird (Umgehung des asynchronen Verhaltens)
+        levelLoaded = true;
 
         return true;
     }

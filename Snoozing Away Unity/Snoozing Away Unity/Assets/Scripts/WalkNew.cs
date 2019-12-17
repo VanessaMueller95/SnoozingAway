@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WalkNew : MonoBehaviour
 {
-
+    //Variablen zur Verwaltung von Snoozer
     private Cuboid cuboid;
 
     private int currentPos;
@@ -14,22 +14,24 @@ public class WalkNew : MonoBehaviour
         Vector3.up,Vector3.left,Vector3.right,Vector3.down,Vector3.forward,Vector3.back
     };
 
-    RaycastHit hitDown; RaycastHit hitFloor; RaycastHit hitWall;
-
     private float walkingSpeed = 2;
-
     public string lastRotation = null;
 
+    //Layermaske, die von den Raycasts von Snoozer ignoriert werden 
     public LayerMask mask;
+    RaycastHit hitDown; RaycastHit hitFloor; RaycastHit hitWall;
 
+    //Animationsvariablen und Audio
     bool blinkEnd = false;
     public Animator animator;
     public AudioManager audiomanager;
 
+    //Menüs
     public GameObject restartMenuUI;
     public GameObject wonMenuUI;
     public Quaternion spreadAngle;
 
+    //Wecker
     public GameObject clock;
     private int clockPosition;
 
@@ -38,30 +40,33 @@ public class WalkNew : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //RenderSettings.ambientLight = new Color(191f / 255.0f, 191f / 255.0f, 191f / 255.0f, 1f);
-        //RenderSettings.ambientIntensity = 0.6f;
         audiomanager = FindObjectOfType<AudioManager>();
         Time.timeScale = 1f;
         cuboid = FindObjectOfType<Cuboid>();
         animator = transform.Find("Snoozer-Walking").GetComponent<Animator>();
         clock = GameObject.Find("alarmclock");
 
+        //Level wird gestartet
         StartCoroutine(StartLevel());
-
     }
 
+    //Methode, die beim Start jedes Levels abläuft
     IEnumerator StartLevel()
     {
+        //Level startet erst, wenn die Leveldatei vollständig geladen ist
         yield return new WaitUntil(() => cuboid.levelLoaded = true);
 
-        Reset();
-        SetClock();
+        Reset(); //positioniert Snoozer
+        SetClock(); //positioniert den Wecker
+
+        //wird zur korrekten Ausrichtung benötigt
         Vector3 sideVector = sideDirections[currentSide];
 
-        // initial position from this point out we should cast the rays 
+        // Position von Snoozer
         Vector3 worldPos = (Vector3)Cuboid.GetPosition(currentPos, cuboid.Dimensions) * cuboid.cellSize - cuboid.CenterPoint;
         gameObject.transform.localPosition = worldPos + sideVector * cuboid.cellSize;
 
+        //Position vom Wecker
         Vector3 worldPosClock = (Vector3)Cuboid.GetPosition(clockPosition, cuboid.Dimensions) * cuboid.cellSize - cuboid.CenterPoint;
         clock.transform.localPosition = worldPosClock + Vector3.up * cuboid.cellSize;
 
@@ -72,7 +77,7 @@ public class WalkNew : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(transform.up);
+        //wenn die Animation beendet ist läuft Snoozer los
         if (blinkEnd == true)
         {
             transform.Translate(Vector3.forward * Time.deltaTime * walkingSpeed);
@@ -82,15 +87,19 @@ public class WalkNew : MonoBehaviour
         Debug.DrawRay(transform.position + transform.up, transform.TransformDirection(Vector3.down) * 1f, Color.yellow);
         Debug.DrawRay(transform.position + transform.up, transform.TransformDirection(Vector3.forward) * 10f, Color.blue);
 
+        //Raycast nach unten
         if (Physics.Raycast(transform.position + transform.up, transform.TransformDirection(Vector3.down) * 1f, out hitFloor, Mathf.Infinity, mask))
         {
+            //Berechnung der Distanz und Ausrichtung am Boden
             Vector3 distance = hitFloor.point + transform.up * 0.1f;
             if (hitFloor.distance < 2)
             {
                 transform.position = Vector3.Lerp(transform.position, distance, Time.deltaTime * (walkingSpeed * 4));
             }
+            //Test auf Wasser (Code 1)
             if (hitFloor.distance < 2 && hitFloor.collider.gameObject.GetComponent<Cube>().code == 1)
             {
+                //Level wird beendet
                 if (!water)
                 {
                     audiomanager.Play("Water");
@@ -102,11 +111,11 @@ public class WalkNew : MonoBehaviour
             }
         }
         
+        //Raycast nach vorne
         if (Physics.Raycast(transform.position + transform.up, transform.TransformDirection(Vector3.forward) * 1f, out hitWall, 1, mask))
         {
             if (hitWall.collider.gameObject.tag != "turnAround" && hitWall.distance < 1.5)
             {
-                //Debug.Log("Tag Wand vorne, in Methode : " + hitWall.collider.gameObject.tag);
                 //Rotation von Snoozer in Richtung der Normalen der Wand
                 Quaternion newRotation = Quaternion.FromToRotation(transform.up, hitWall.normal) * transform.rotation;
                 //Animation der Position von Snoozer
@@ -114,6 +123,7 @@ public class WalkNew : MonoBehaviour
             }
             else if (hitWall.collider.gameObject.tag == "turnAround" && hitWall.distance < 0.3)
             {
+                Debug.Log("TREPPE");
                 Debug.Log(transform.up);
                 Debug.Log(transform);
                 if (V3Equal(transform.up, Vector3.back))
@@ -137,8 +147,7 @@ public class WalkNew : MonoBehaviour
             }
         }
         
-        
-        //Raycast nach unten um zu Testen ob es einen Boden gibt und Positionierung an Boden-Normale
+        //Raycast schräg nach unten um zu Testen ob es einen Boden gibt und Positionierung an Boden-Normale
         if (Physics.Raycast(transform.position, (Quaternion.AngleAxis(-82, transform.right) * (transform.transform.forward * -1)) * 10f, out hitDown, Mathf.Infinity, mask))
         {
             //Test ob Bodennormale Charakter Normalen entspricht
@@ -152,6 +161,7 @@ public class WalkNew : MonoBehaviour
         
     }
 
+    //Position Snoozers auf Start-Plattform (Code 6)
     public void Reset()
     {
 
@@ -168,6 +178,7 @@ public class WalkNew : MonoBehaviour
         }
     }
 
+    //Position Weckers auf End-Plattform (Code 7)
     public void SetClock()
     {
 
@@ -189,6 +200,7 @@ public class WalkNew : MonoBehaviour
         return Vector3.SqrMagnitude(a - b) < 0.0001;
     }
 
+    //Blinkanimtion, Parameter: Dauer und Auslöser
     IEnumerator Blink(float waitTime, string state)
     {
         Debug.Log("STATE: " + state);
@@ -214,7 +226,6 @@ public class WalkNew : MonoBehaviour
         //Bei Start wird das Ticken aktiviert und der Timer gestartet
         if (state == "start")
         {
-            //GameObject.Find("TimerCanvas").GetComponent<Timer>().timerActive = true;
             GameObject.Find("TimerImage").GetComponent<ImageTimer>().timerActive = true;
             audiomanager.Play("Ticking");
         }
@@ -228,6 +239,7 @@ public class WalkNew : MonoBehaviour
         }
     }
 
+    //Blinkanimation des Weckers
     IEnumerator ClockBlink(float waitTime)
     {
         var endTime = Time.time + waitTime;
@@ -252,8 +264,7 @@ public class WalkNew : MonoBehaviour
         audiomanager.Stop("Ticking");
     }
 
-
-
+    //Collision Events von Snoozer
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "ziel")

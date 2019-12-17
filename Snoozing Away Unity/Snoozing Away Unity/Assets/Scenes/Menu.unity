@@ -480,7 +480,7 @@ GameObject:
   - component: {fileID: 168367137}
   - component: {fileID: 168367136}
   m_Layer: 5
-  m_Name: Snoozer (1)
+  m_Name: Wecker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

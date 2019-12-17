@@ -8,24 +8,7 @@ public class PauseMenu : MonoBehaviour {
     public GameObject pauseMenuUI;
     public GameObject helpMenuUI;
 
-    void Update () {
-        //Pause Menü aktivieren oder deaktivieren durch die Taste P
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            Debug.Log("pause");
-            if (GameIsPause)
-            {
-                Resume();
-            }
-            else
-            {
-                Pause();
-            }
-        }
-		
-	}
-
-    //Aktivieren des Pause Menüs, Anhalten des Spiels, Ticken-Sound stoppen
+    //Aktivieren des Pause Menüs, Anhalten des Spiels, Sound stoppen
     public void Pause()
     {
         pauseMenuUI.SetActive(true);
@@ -103,6 +86,7 @@ public class PauseMenu : MonoBehaviour {
         SceneManager.LoadScene("Menu");
     }
 
+    //läd den folgenden Level
     public void NextLevel()
     {
         FindObjectOfType<AudioManager>().Stop("Ring");
