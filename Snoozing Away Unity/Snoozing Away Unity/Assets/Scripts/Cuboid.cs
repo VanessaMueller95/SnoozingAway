@@ -47,13 +47,16 @@ public class Cuboid : MonoBehaviour
     // Start is called before the first frame update
     IEnumerator Start()
     {
+        levelLoaded = false;
+
+        cells = new Cell[dimensions.x * dimensions.y * dimensions.z];
+
         //Datei des aktuellen Levelns wird geladen
         fileName = "level" + levelNumber + ".dat";
         coroutine = DownloadFile();
         yield return StartCoroutine(coroutine);
 
         // create cells - welcome to Unity vectors having no trace
-        cells = new Cell[dimensions.x * dimensions.y * dimensions.z];
 
         for(int i = 0; i < cells.Length;i++) {
             cells[i] = new Cell();
@@ -63,13 +66,12 @@ public class Cuboid : MonoBehaviour
 
         UpdateVisuals();
 
-
-
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log(levelLoaded);
         if (Input.GetKeyUp(KeyCode.C))
         {
             // toggle cursor
@@ -250,7 +252,9 @@ public class Cuboid : MonoBehaviour
         uwr = new UnityWebRequest(Path.Combine(Application.streamingAssetsPath, fileName));
         uwr.downloadHandler = new DownloadHandlerFile(Path.Combine(Application.persistentDataPath, fileName));
         yield return uwr.SendWebRequest();
-        Debug.Log(Path.Combine(Application.streamingAssetsPath, fileName) + " File successfully downloaded and saved to " + Path.Combine(Application.persistentDataPath, "level1.dat")); 
+        Debug.Log(Path.Combine(Application.streamingAssetsPath, fileName) + " File successfully downloaded and saved to " + Path.Combine(Application.persistentDataPath, "level1.dat"));
+
+
     }
 
     //Leveldatei wird gelesen

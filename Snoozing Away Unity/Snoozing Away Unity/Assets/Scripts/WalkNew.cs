@@ -54,8 +54,8 @@ public class WalkNew : MonoBehaviour
     IEnumerator StartLevel()
     {
         //Level startet erst, wenn die Leveldatei vollständig geladen ist
-        yield return new WaitUntil(() => cuboid.levelLoaded = true);
-
+        yield return new WaitUntil(() => cuboid.levelLoaded == true);
+        Debug.Log("nach wait");
         Reset(); //positioniert Snoozer
         SetClock(); //positioniert den Wecker
 
@@ -164,7 +164,6 @@ public class WalkNew : MonoBehaviour
     //Position Snoozers auf Start-Plattform (Code 6)
     public void Reset()
     {
-
         for (var i = 0; i < cuboid.CellCount; i++)
         {
             if (cuboid.Cells[i].code == 6)
